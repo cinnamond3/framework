@@ -1,0 +1,24 @@
+<configuration>
+        <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        </contextListener>
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                        <pattern>%date{ISO8601} [%thread] %-5level %logger - %msg%n</pattern>
+                </encoder>
+        </appender>
+        <appender name="APPLOGFILE"
+                class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${user.home}/logs/spis2.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <fileNamePattern>${user.home}/logs/spis2_%d{yyyy-MM-dd}.log
+                        </fileNamePattern>
+                </rollingPolicy>
+                <encoder>
+                        <pattern>%date{ISO8601} [%thread] %-5level %logger - %msg%n</pattern>
+                </encoder>
+        </appender>
+        <root level="INFO">
+                <appender-ref ref="STDOUT" />
+                <appender-ref ref="APPLOGFILE" />
+        </root>
+</configuration>
