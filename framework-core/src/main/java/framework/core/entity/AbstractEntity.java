@@ -8,36 +8,59 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+/**
+ * This class provides basic implementations for all Entity classes.
+ * 
+ * @author Frederick Yap
+ */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
-	private static final long serialVersionUID = -2688529713266301979L;
+    private static final long serialVersionUID = -2688529713266301979L;
 
-	@Id
-	@Column
-	private String id;
-	
-	@Column
-	private boolean deleted;
-	
-	@Column
-	@Version
-	private Long version;
+    @Column
+    private boolean deleted;
 
-	protected AbstractEntity() {
-		this.id = UUID.randomUUID().toString();
-	}
-	
-	public String getId() {
-		return id;
-	}
+    @Id
+    @Column
+    private final String id;
 
-	public boolean isDeleted() {
-		return deleted;
-	}
+    @Column
+    @Version
+    private Long version;
 
-	public Long getVersion() {
-		return version;
-	}
-	
+    /**
+     * Default constructor.
+     */
+    protected AbstractEntity() {
+        this.id = UUID.randomUUID().toString();
+    }
+
+    /**
+     * Returns the unique identifier for this data.
+     * 
+     * @return the unique identifier.
+     */
+    public String getId() {
+        return this.id;
+    }
+
+    /**
+     * Returns the version of this data used for pessimistic locking.
+     * 
+     * @return the version of this data.
+     */
+    public Long getVersion() {
+        return this.version;
+    }
+
+    /**
+     * Returns the status of this data.
+     * 
+     * @return true if this is marked as deleted.
+     */
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
 }

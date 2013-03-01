@@ -4,24 +4,39 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Represents the different roles that a {@link Usergroup} can have access to.
+ * 
+ * @author Frederick Yap
+ */
 @Entity
-@Table(name="ROLE")
+@Table(name = "ROLE")
 public class Role extends AbstractEntity {
 
-	private static final long serialVersionUID = 1759977741752483761L;
+    private static final long serialVersionUID = 1759977741752483761L;
 
-	@Column
-	private String name;
-	
-	@Column
-	private String description;
+    @Column
+    private String description;
 
-	public String getName() {
-		return name;
-	}
+    @Column(unique = true)
+    private String name;
 
-	public String getDescription() {
-		return description;
-	}
-	
+    /**
+     * Returns the description of this Role.
+     * 
+     * @return the description of this Role.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Returns the unique name given to this Role.
+     * 
+     * @return the unique name.
+     */
+    public String getName() {
+        return this.name;
+    }
+
 }

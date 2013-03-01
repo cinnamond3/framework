@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping wildcard="true">
+        <class-a>framework.core.entity.SystemParameter</class-a>
+        <class-b>framework.ui.databeans.SystemParameterDTO</class-b>
+        <field>
+            <a is-accessible="true">code</a>
+            <b>code</b>
+        </field>
+        <field>
+            <a is-accessible="true">description</a>
+            <b>description</b>
+        </field>
+        <field>
+            <a is-accessible="true">maximum</a>
+            <b>maximum</b>
+        </field>
+        <field>
+            <a is-accessible="true">minimum</a>
+            <b>minimum</b>
+        </field>
+        <field>
+            <a is-accessible="true">readonly</a>
+            <b>readonly</b>
+        </field>
+        <field>
+            <a is-accessible="true">type</a>
+            <b>type</b>
+        </field>
+        <field>
+            <a is-accessible="true">value</a>
+            <b>value</b>
+        </field>
+    </mapping>
+</mappings>

@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
     default-autowire="byName">
-    <context:component-scan base-package="com.fujixerox.*" />
+    <context:component-scan base-package="framework.*" />
     <bean name="propertiesReader" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location" value="classpath:settings.properties" />
     </bean>
@@ -48,7 +48,7 @@
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
         </property>
-       <!--  <property name="persistenceProvider" ref="customHibernatePersistence" /> -->
+        <property name="persistenceProvider" ref="customHibernatePersistence" />
     </bean>
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -69,22 +69,30 @@
         </property>
         <property name="interceptorNames">
             <list>
-                <value>loggingInterceptor</value>
+                <!-- <value>loggingInterceptor</value> -->
                 <value>transactionInterceptor</value>
             </list>
         </property>
     </bean>
+    <tx:annotation-driven/>
     <!-- Encryption -->
     <bean id="stringEncryptor" class="org.jasypt.encryption.pbe.PooledPBEStringEncryptor">
         <property name="algorithm" value="${framework.encryption.algorithm}" />
         <property name="password" value="${framework.encryption.password}" />
         <property name="poolSize" value="${framework.encryption.poolsize}" />
     </bean>
-    <!-- Dozer -->
-    <bean id="mapper" class="org.dozer.DozerBeanMapper">
+    <bean id="dozerBeanMapper" class="org.dozer.spring.DozerBeanMapperFactoryBean" scope="singleton">
         <property name="mappingFiles">
             <list>
+                <value>classpath:SystemParameterMap.xml</value>
+                <value>classpath:AuditlogMap.xml</value>
             </list>
+        </property>
+        <property name="customConvertersWithId">
+        	<map>
+        		<entry key="encryptionConverter" value-ref="encryptionConverter" />
+				<entry key="dateConverter" value-ref="dateConverter" />
+        	</map>
         </property>
     </bean>
 </beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping wildcard="true">
+        <class-a>framework.core.entity.Auditlog</class-a>
+        <class-b>framework.ui.databeans.AuditlogDTO</class-b>
+        <field>
+            <a is-accessible="true">detail</a>
+            <b>detail</b>
+        </field>
+        <field custom-converter-id="dateConverter">
+            <a is-accessible="true">logdate</a>
+            <b>logdate</b>
+        </field>
+        <field>
+            <a is-accessible="true">previous</a>
+            <b>previous</b>
+        </field>
+        <field>
+            <a is-accessible="true">type</a>
+            <b>type</b>
+        </field>
+        <field>
+            <a is-accessible="true">userid</a>
+            <b>userid</b>
+        </field>
+   	</mapping>
+</mappings>
