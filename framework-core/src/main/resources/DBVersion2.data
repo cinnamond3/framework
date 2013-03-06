@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Data>
+    <records>
+        <User>
+            <username>Administrator</username>
+            <password>password1234</password>
+            <passwordexpiration>0</passwordexpiration>
+            <profileexpiration>0</profileexpiration>
+            <usergroup>
+	            <name>SYS_ADMIN</name>
+	            <description>System Administrators</description>
+	            <roles>
+	            	<Role>
+			            <name>CHANGE_PASSWORD</name>
+			            <description>Change Password</description>
+			            <urlPattern>/change-password/*</urlPattern>
+			        </Role>
+			        <Role>
+			            <name>SYSTEM_PARAMETERS</name>
+			            <description>Manage System Parameters</description>
+			            <urlPattern>/system-parameters/*</urlPattern>
+			        </Role>
+			        <Role>
+			            <name>SYSTEM _REFERENCE</name>
+			            <description>Manage System Reference</description>
+			            <urlPattern>/system-reference/*</urlPattern>
+			        </Role>
+			        <Role>
+			            <name>LOGGED_IN_USERS</name>
+			            <description>Manage Authenticated Users</description>
+			            <urlPattern>/authenticated-users/*</urlPattern>
+			        </Role>
+			        <Role>
+			            <name>USERGROUP_MANAGEMENT</name>
+			            <description>Manage Usergroups</description>
+			            <urlPattern>/usergroups/*</urlPattern>
+			        </Role>
+			        <Role>
+			            <name>USER_MANAGEMENT</name>
+			            <description>Manage Users</description>
+			            <urlPattern>/users/*</urlPattern>
+			        </Role>
+	            </roles>
+	        </usergroup>
+	        <userdetails>
+	            <address>0</address>
+				<birthdate>0</birthdate>
+				<city>BOSTON</city>
+				<country>USA</country>
+				<emailaddress>someone@example.com</emailaddress>
+				<fullname>System Administrator</fullname>
+				<phone>8888888</phone>
+				<zipcode>1000</zipcode>
+	        </userdetails>
+        </User>
+    </records>
+</Data>

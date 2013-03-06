@@ -14,6 +14,6 @@ import framework.core.service.UserService;
 @Named
 public class UserServiceImpl extends AbstractService<User, UserDao> implements UserService {
 
-	private static final long serialVersionUID = 5506093159372637005L;
+    private static final long serialVersionUID = 5506093159372637005L;
 
 }

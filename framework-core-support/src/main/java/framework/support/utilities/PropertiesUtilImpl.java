@@ -1,4 +1,4 @@
-package framework.extensions.utilities;
+package framework.support.utilities;
 
 import java.util.Properties;
 
@@ -17,6 +17,9 @@ public class PropertiesUtilImpl implements PropertiesUtil {
         this.properties = propertiesReader;
     }
 
+    /* (non-Javadoc)
+     * @see framework.support.utilities.Pro#getProperty(java.lang.String)
+     */
     @Override
     public String getProperty(String key) {
         return this.properties.getProperty(key);

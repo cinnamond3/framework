@@ -18,14 +18,14 @@ public class ServiceResponse<T extends AbstractDTO> {
     /**
      * @return the responseHeader
      */
-    protected ResponseHeader getResponseHeader() {
+    public ResponseHeader getResponseHeader() {
         return this.responseHeader;
     }
 
     /**
      * @return the results
      */
-    protected T[] getResults() {
+    public T[] getResults() {
         return this.results;
     }
 
@@ -33,7 +33,7 @@ public class ServiceResponse<T extends AbstractDTO> {
      * @param responseHeader
      *            the responseHeader to set
      */
-    protected void setResponseHeader(ResponseHeader responseHeader) {
+    public void setResponseHeader(ResponseHeader responseHeader) {
         this.responseHeader = responseHeader;
     }
 
@@ -41,7 +41,7 @@ public class ServiceResponse<T extends AbstractDTO> {
      * @param results
      *            the results to set
      */
-    protected void setResults(@SuppressWarnings("unchecked") T... results) {
+    public void setResults(@SuppressWarnings("unchecked") T... results) {
         this.results = results;
     }
 

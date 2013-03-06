@@ -1,16 +1,19 @@
 package framework.core.persistence.impl;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import framework.core.entity.AbstractEntity;
 import framework.core.persistence.Dao;
-import framework.core.utilities.PropertiesUtil;
 
 /**
  * This class contains basic CRUD implementation. All data access object classes must extends this class.
@@ -26,8 +29,6 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
 
     private final Class<T> persistentClass;
 
-    private PropertiesUtil propertiesUtil;
-
     protected EntityManager entityManager;
 
     /**
@@ -35,8 +36,8 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
      */
     @SuppressWarnings("unchecked")
     protected AbstractDao() {
-        this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-                .getActualTypeArguments()[0];
+        final Type[] types = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
+        this.persistentClass = (Class<T>) types[0];
     }
 
     /*
@@ -54,7 +55,9 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
      */
     @Override
     public T findById(String id) {
-        return this.entityManager.find(this.persistentClass, id);
+        final T t = this.entityManager.find(this.persistentClass, id);
+        this.entityManager.detach(t);
+        return t;
     }
 
     /*
@@ -66,50 +69,38 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         this.entityManager.merge(t);
     }
 
-    /**
-     * @param propertiesUtil
-     *            the propertiesUtil to set
-     */
-    @Inject
-    public void setPropertiesUtil(PropertiesUtil propertiesUtil) {
-        this.propertiesUtil = propertiesUtil;
+    protected List<T> find(String name) {
+        return this.find(name, null, null, null);
     }
 
-    /**
-     * Returns an instance of a cacheable named {@link Query}.
-     * 
-     * @param name
-     *            the name of the query.
-     * @return an instance of a named {@link Query}.
-     */
-    protected Query createCacheableNamedQuery(String name) {
-        final Query query = this.createNamedQuery(name);
-        query.setHint(this.propertiesUtil.getProperty("framework.cacheable.hint"), true);
-        return query;
+    protected List<T> find(String name, Map<String, Object> parameters) {
+        return this.find(name, parameters, null, null);
     }
 
-    /**
-     * Returns an instance of a named {@link Query}.
-     * 
-     * @param name
-     *            the name of the query.
-     * @return an instance of a named {@link Query}.
-     */
-    protected Query createNamedQuery(String name) {
+    protected List<T> find(String name, Map<String, Object> parameters, Integer index) {
+        return this.find(name, parameters, index, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected List<T> find(String name, Map<String, Object> parameters, Integer index, Integer size) {
         final Query query = this.entityManager.createNamedQuery(name);
-        return query;
-    }
-
-    /**
-     * Remove the given entity from the persistence context, causing a managed entity to become detached. Unflushed
-     * changes made to the entity if any (including removal of the entity), will not be synchronized to the database.
-     * Entities which previously referenced the detached entity will continue to reference it.
-     * 
-     * @param t
-     *            entity instance.
-     */
-    protected void detach(T t) {
-        this.entityManager.detach(t);
+        if (parameters != null) {
+            for (final Entry<String, Object> parameter : parameters.entrySet()) {
+                query.setParameter(parameter.getKey(), parameter.getValue());
+            }
+        }
+        if (index != null) {
+            query.setFirstResult(index);
+        }
+        if (size != null) {
+            query.setMaxResults(size);
+        }
+        query.setFlushMode(FlushModeType.COMMIT);
+        final List<T> objects = query.getResultList();
+        for (final T object : objects) {
+            this.entityManager.detach(object);
+        }
+        return objects;
     }
 
     /**

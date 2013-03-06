@@ -1,9 +1,10 @@
 package framework.core.persistence.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
-import javax.persistence.Query;
 
 import framework.core.constants.ParameterCode;
 import framework.core.entity.SystemParameter;
@@ -23,11 +24,9 @@ public class SystemParameterDaoImpl extends AbstractDao<SystemParameter> impleme
      * (non-Javadoc)
      * @see framework.core.persistence.SystemParameterDao#findAllActiveSystemParam()
      */
-    @SuppressWarnings("unchecked")
     @Override
     public List<SystemParameter> findAllActiveSystemParam() {
-        final Query query = this.createNamedQuery("findAllActiveSystemParam");
-        return query.getResultList();
+        return this.find("findAllActiveSystemParam");
     }
 
     /*
@@ -35,16 +34,11 @@ public class SystemParameterDaoImpl extends AbstractDao<SystemParameter> impleme
      * @see
      * framework.core.persistence.SystemParameterDao#findSystemParametersByCode(framework.core.constants.ParameterCode)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public List<SystemParameter> findSystemParametersByCode(ParameterCode code) {
-        final Query query = this.createNamedQuery("findSystemParametersByCode");
-        query.setParameter("code", code);
-        List<SystemParameter> systemParameters = query.getResultList();
-        for (SystemParameter systemParameter : systemParameters) {
-            this.detach(systemParameter);
-        }
-        return systemParameters;
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("code", code);
+        return this.find("findSystemParametersByCode", parameters);
     }
-    
+
 }

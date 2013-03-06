@@ -1,4 +1,4 @@
-package framework.extensions.utilities;
+package framework.support.utilities;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,11 +17,19 @@ public class CryptographyImpl implements Cryptography {
         this.encryptor = encryptor;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see framework.support.utilities.ICryptography#decrypt(java.lang.String)
+     */
     @Override
     public String decrypt(String encryptedMessage) {
         return this.encryptor.decrypt(encryptedMessage);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see framework.support.utilities.ICryptography#encrypt(java.lang.String)
+     */
     @Override
     public String encrypt(String message) {
         return this.encryptor.encrypt(message);

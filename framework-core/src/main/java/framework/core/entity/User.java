@@ -90,4 +90,28 @@ public class User extends AbstractEntity {
         return this.username;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPasswordexpiration(Long passwordexpiration) {
+        this.passwordexpiration = passwordexpiration;
+    }
+
+    public void setProfileexpiration(Long profileexpiration) {
+        this.profileexpiration = profileexpiration;
+    }
+
+    public void setUserdetails(Userdetails userdetails) {
+        this.userdetails = userdetails;
+    }
+
+    public void setUsergroup(Usergroup usergroup) {
+        this.usergroup = usergroup;
+    }
+
+    protected void setUsername(String username) {
+        this.username = username;
+    }
+
 }

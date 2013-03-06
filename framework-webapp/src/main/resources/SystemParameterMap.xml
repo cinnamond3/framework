@@ -7,6 +7,10 @@
         <class-a>framework.core.entity.SystemParameter</class-a>
         <class-b>framework.ui.databeans.SystemParameterDTO</class-b>
         <field>
+            <a is-accessible="true">id</a>
+            <b>id</b>
+        </field>
+        <field>
             <a is-accessible="true">code</a>
             <b>code</b>
         </field>

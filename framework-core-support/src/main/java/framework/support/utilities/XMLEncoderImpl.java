@@ -1,4 +1,4 @@
-package framework.extensions.utilities;
+package framework.support.utilities;
 
 import java.io.InputStream;
 
@@ -18,12 +18,12 @@ public class XMLEncoderImpl implements XMLEncoder {
     public <T extends AbstractEntity> Data<T> convert(InputStream xml, Class<?>... type) {
         final XStream xStream = new XStream();
         xStream.alias("Data", Data.class);
-        for (Class<?> aClass : type) {
+        for (final Class<?> aClass : type) {
             xStream.alias(aClass.getSimpleName(), aClass);
         }
         return (Data<T>) xStream.fromXML(xml);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> T convertTo(InputStream xml, Class<T> type) {

@@ -23,41 +23,41 @@ import framework.core.constants.ParameterType;
 @NamedQueries(value = {
         @NamedQuery(name = "findAllActiveSystemParam", query = "from SystemParameter where deleted = false"),
         @NamedQuery(name = "findSystemParametersByCode", query = "from SystemParameter where code = :code"),
-        @NamedQuery(name = "updateValue", query = "update SystemParameter set value = :value where code = :code")})
+        @NamedQuery(name = "updateValue", query = "update SystemParameter set value = :value where code = :code") })
 public class SystemParameter extends AbstractEntity {
-    
+
     private static final long serialVersionUID = 7583893180559514999L;
-    
+
     @Column(unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
     private ParameterCode code;
-    
+
     @Column
     private String description;
-    
+
     @Column
     private Long maximum;
-    
+
     @Column
     private Long minimum;
-    
+
     @Column
     private boolean readonly;
-    
+
     @Column
     @Enumerated(EnumType.STRING)
     private ParameterType type;
-    
+
     @Column
     private String value;
-    
+
     /**
      * Creates a new instance of {@link SystemParameter}.
      */
     protected SystemParameter() {
-        
+
     }
-    
+
     /**
      * Returns the unique code of the System Parameter. This is equivalent to system environment variable name.
      * 
@@ -66,7 +66,7 @@ public class SystemParameter extends AbstractEntity {
     public ParameterCode getCode() {
         return this.code;
     }
-    
+
     /**
      * Returns the purpose of the System Parameter.
      * 
@@ -75,7 +75,7 @@ public class SystemParameter extends AbstractEntity {
     public String getDescription() {
         return this.description;
     }
-    
+
     /**
      * Returns the maximum allowable size for the value. If the {@link ParameterType} is <em>NUMERIC</em>, this
      * translate to the maximum allowable parameter value; but if the {@link ParameterType} is <em>STRING</em> or
@@ -89,7 +89,7 @@ public class SystemParameter extends AbstractEntity {
     public Long getMaximum() {
         return this.maximum;
     }
-    
+
     /**
      * Returns the minimum allowable size for the value. If the {@link ParameterType} is <em>NUMERIC</em>, this
      * translate to the minimum allowable parameter value; but if the {@link ParameterType} is <em>STRING</em> or
@@ -103,7 +103,7 @@ public class SystemParameter extends AbstractEntity {
     public Long getMinimum() {
         return this.minimum;
     }
-    
+
     /**
      * Returns the type of the System Parameter. See {@link ParameterType} for specific return values.
      * 
@@ -112,7 +112,7 @@ public class SystemParameter extends AbstractEntity {
     public ParameterType getType() {
         return this.type;
     }
-    
+
     /**
      * Returns the value of the System Parameter. This is the actual system environment variable value.
      * 
@@ -121,7 +121,7 @@ public class SystemParameter extends AbstractEntity {
     public String getValue() {
         return this.value;
     }
-    
+
     /**
      * Returns true if the System Parameter value can not be modified by the user, otherwise false.
      * 
@@ -133,10 +133,12 @@ public class SystemParameter extends AbstractEntity {
 
     /**
      * Sets the value of the System Parameter.
-     * @param value the value to set.
+     * 
+     * @param value
+     *            the value to set.
      */
     public void setValue(Object value) {
         this.value = String.valueOf(value);
     }
-    
+
 }

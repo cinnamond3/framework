@@ -17,7 +17,7 @@ public enum EventType {
     EXCEPTION,
 
     /**
-     * This is the event type if a new data is persisted in the datastore.
+     * This is the event type if a new data is persisted in the datastore or an existing data has been updated.
      */
     INSERT,
 
@@ -32,7 +32,7 @@ public enum EventType {
     LOGOUT,
 
     /**
-     * This is the event type when a data has been changed in the datastore.
+     * This is the event type if an existing data has been updated.
      */
-    UPDATE
+    UPDATE,
 }

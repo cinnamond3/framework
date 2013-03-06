@@ -21,6 +21,9 @@ public class Role extends AbstractEntity {
     @Column(unique = true)
     private String name;
 
+    @Column
+    private String urlPattern;
+
     /**
      * Returns the description of this Role.
      * 
@@ -37,6 +40,15 @@ public class Role extends AbstractEntity {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Returns the url pattern that the Role is accessible.
+     * 
+     * @return the url pattern.
+     */
+    public String getUrlPattern() {
+        return this.urlPattern;
     }
 
 }

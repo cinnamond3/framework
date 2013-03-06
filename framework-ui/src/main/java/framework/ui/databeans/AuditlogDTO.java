@@ -30,72 +30,75 @@ public class AuditlogDTO extends AbstractDTO {
      * @return the detail
      */
     public String getDetail() {
-        return detail;
-    }
-
-    /**
-     * @param detail the detail to set
-     */
-    public void setDetail(String detail) {
-        this.detail = detail;
+        return this.detail;
     }
 
     /**
      * @return the logdate
      */
     public Date getLogdate() {
-        return logdate;
-    }
-
-    /**
-     * @param logdate the logdate to set
-     */
-    public void setLogdate(Date logdate) {
-        this.logdate = logdate;
+        return this.logdate;
     }
 
     /**
      * @return the previous
      */
     public String getPrevious() {
-        return previous;
-    }
-
-    /**
-     * @param previous the previous to set
-     */
-    public void setPrevious(String previous) {
-        this.previous = previous;
+        return this.previous;
     }
 
     /**
      * @return the type
      */
     public String getType() {
-        return type;
-    }
-
-    /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = type;
+        return this.type;
     }
 
     /**
      * @return the userid
      */
     public String getUserid() {
-        return userid;
+        return this.userid;
     }
 
     /**
-     * @param userid the userid to set
+     * @param detail
+     *            the detail to set
+     */
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    /**
+     * @param logdate
+     *            the logdate to set
+     */
+    public void setLogdate(Date logdate) {
+        this.logdate = logdate;
+    }
+
+    /**
+     * @param previous
+     *            the previous to set
+     */
+    public void setPrevious(String previous) {
+        this.previous = previous;
+    }
+
+    /**
+     * @param type
+     *            the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @param userid
+     *            the userid to set
      */
     public void setUserid(String userid) {
         this.userid = userid;
     }
-    
-    
-    
+
 }

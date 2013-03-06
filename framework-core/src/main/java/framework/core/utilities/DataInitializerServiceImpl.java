@@ -20,7 +20,8 @@ import framework.core.service.SystemParameterService;
 @Named
 public class DataInitializerServiceImpl {
 
-    private List<DataGenerator<?>> dataGenerators;
+    private Cryptography cryptography;
+    private List<DataGenerator> dataGenerators;
     private SystemParameterService systemParameterService;
     private XMLEncoder xmlEncoder;
 
@@ -35,25 +36,30 @@ public class DataInitializerServiceImpl {
      */
     public void update() {
         this.sort();
-        for (final DataGenerator<?> dataGenerator : this.dataGenerators) {
+        for (final DataGenerator dataGenerator : this.dataGenerators) {
             SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.DB_VERSION);
             if (systemParameter != null) {
-                final Integer currentDBVersion = Integer.valueOf(systemParameter.getValue());
+                final Integer currentDBVersion = Integer.valueOf(this.cryptography.decrypt(systemParameter.getValue()));
                 if (dataGenerator.getDBVersion() > currentDBVersion) {
-                    dataGenerator.saveOrUpdate();
-                    systemParameter.setValue(dataGenerator.getDBVersion());
+                    dataGenerator.performDataOperation();
+                    systemParameter.setValue(this.cryptography.encrypt(String.valueOf(dataGenerator.getDBVersion())));
                     this.systemParameterService.saveOrUpdate(systemParameter);
                 }
             } else {
                 final ClassLoader classLoader = this.getClass().getClassLoader();
                 final InputStream resourceAsStream = classLoader.getResourceAsStream("DBVersion0.data");
                 systemParameter = this.xmlEncoder.convertTo(resourceAsStream, SystemParameter.class);
-                systemParameter.setValue(dataGenerator.getDBVersion());
-                dataGenerator.saveOrUpdate();
+                systemParameter.setValue(this.cryptography.encrypt(String.valueOf(dataGenerator.getDBVersion())));
+                dataGenerator.performDataOperation();
                 this.systemParameterService.saveOrUpdate(systemParameter);
             }
         }
 
+    }
+
+    @Inject
+    protected void setCryptography(Cryptography cryptography) {
+        this.cryptography = cryptography;
     }
 
     /**
@@ -63,7 +69,7 @@ public class DataInitializerServiceImpl {
      *            list {@link DataGenerator} implementation injected by the IOC container.
      */
     @Inject
-    protected void setDataGenerators(List<DataGenerator<?>> dataGenerators) {
+    protected void setDataGenerators(List<DataGenerator> dataGenerators) {
         this.dataGenerators = dataGenerators;
     }
 
@@ -93,11 +99,12 @@ public class DataInitializerServiceImpl {
      * Sorts all {@link DataGenerator} based on version.
      */
     protected void sort() {
-        Collections.sort(this.dataGenerators, new Comparator<DataGenerator<?>>() {
+        Collections.sort(this.dataGenerators, new Comparator<DataGenerator>() {
             @Override
-            public int compare(DataGenerator<?> o1, DataGenerator<?> o2) {
+            public int compare(DataGenerator o1, DataGenerator o2) {
                 return o1.getDBVersion() - o2.getDBVersion();
             }
         });
     }
+
 }

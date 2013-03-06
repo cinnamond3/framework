@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
+
+import framework.core.entity.listeners.EntityListener;
 
 /**
  * This class provides basic implementations for all Entity classes.
@@ -14,6 +17,7 @@ import javax.persistence.Version;
  * @author Frederick Yap
  */
 @MappedSuperclass
+@EntityListeners(value = { EntityListener.class })
 public abstract class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -2688529713266301979L;

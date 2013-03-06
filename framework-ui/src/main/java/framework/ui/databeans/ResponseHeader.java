@@ -18,14 +18,14 @@ public class ResponseHeader {
     /**
      * @return the statusCode
      */
-    protected Integer getStatusCode() {
+    public Integer getStatusCode() {
         return this.statusCode;
     }
 
     /**
      * @return the statusMessage
      */
-    protected String getStatusMessage() {
+    public String getStatusMessage() {
         return this.statusMessage;
     }
 
@@ -33,7 +33,7 @@ public class ResponseHeader {
      * @param statusCode
      *            the statusCode to set
      */
-    protected void setStatusCode(Integer statusCode) {
+    public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -41,7 +41,7 @@ public class ResponseHeader {
      * @param statusMessage
      *            the statusMessage to set
      */
-    protected void setStatusMessage(String statusMessage) {
+    public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
     }
 

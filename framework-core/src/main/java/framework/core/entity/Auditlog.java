@@ -17,7 +17,7 @@ import framework.core.constants.EventType;
  */
 @Entity
 @Table(name = "AUDITLOG")
-@NamedQueries(value = { @NamedQuery(name = "findLastAuditlogByCurrentDetail", query = "from Auditlog where detail LIKE :detail ORDER BY logdate DESC") })
+@NamedQueries(value = { @NamedQuery(name = "findLastAuditlogByDetail", query = "from Auditlog where detail LIKE :detail ORDER BY logdate DESC") })
 public class Auditlog extends AbstractEntity {
 
     private static final long serialVersionUID = -3935171119789690953L;
@@ -82,6 +82,26 @@ public class Auditlog extends AbstractEntity {
      */
     public String getUserid() {
         return this.userid;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public void setLogdate(Long logdate) {
+        this.logdate = logdate;
+    }
+
+    public void setPrevious(String previous) {
+        this.previous = previous;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
 }

@@ -1,9 +1,11 @@
 package framework.core.persistence;
 
+import java.util.List;
+
 import framework.core.entity.Auditlog;
 
 public interface AuditlogDao extends Dao<Auditlog> {
 
-    Auditlog findLastAuditlogByCurrentDetail(String group);
+    List<Auditlog> findLastAuditlogByDetail(String group);
 
 }
