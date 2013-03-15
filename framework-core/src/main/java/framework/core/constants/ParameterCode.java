@@ -35,5 +35,7 @@ public enum ParameterCode {
     /**
      * Represents the SMTP host for sending emails.
      */
-    SMTP_HOST
+    SMTP_HOST,
+    
+    SESSION_TIMEOUT
 }

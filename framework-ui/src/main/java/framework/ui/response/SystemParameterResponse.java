@@ -1,4 +1,6 @@
-package framework.ui.databeans;
+package framework.ui.response;
+
+import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,7 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SystemParameterDTO extends AbstractDTO {
+public class SystemParameterResponse implements Serializable {
+
+    private static final long serialVersionUID = 908256462946326444L;
 
     @XmlElement
     private String code;

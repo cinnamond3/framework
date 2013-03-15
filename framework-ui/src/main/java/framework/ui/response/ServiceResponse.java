@@ -1,4 +1,6 @@
-package framework.ui.databeans;
+package framework.ui.response;
+
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,13 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ServiceResponse<T extends AbstractDTO> {
+public class ServiceResponse<T> {
 
     @XmlElement
     private ResponseHeader responseHeader;
 
     @XmlElement
-    private T[] results;
+    private List<T> results;
 
     /**
      * @return the responseHeader
@@ -25,7 +27,7 @@ public class ServiceResponse<T extends AbstractDTO> {
     /**
      * @return the results
      */
-    public T[] getResults() {
+    public List<T> getResults() {
         return this.results;
     }
 
@@ -41,7 +43,7 @@ public class ServiceResponse<T extends AbstractDTO> {
      * @param results
      *            the results to set
      */
-    public void setResults(@SuppressWarnings("unchecked") T... results) {
+    public void setResults(List<T> results) {
         this.results = results;
     }
 

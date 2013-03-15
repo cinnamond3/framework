@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -14,6 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USER")
+@NamedQueries(value = { @NamedQuery(name = "findUsersByUsername", query = "from User where username = :username") })
 public class User extends AbstractEntity {
 
     private static final long serialVersionUID = -7767487387897790096L;

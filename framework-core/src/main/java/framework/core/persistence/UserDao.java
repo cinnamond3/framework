@@ -1,5 +1,7 @@
 package framework.core.persistence;
 
+import java.util.List;
+
 import framework.core.entity.User;
 
 /**
@@ -9,4 +11,5 @@ import framework.core.entity.User;
  */
 public interface UserDao extends Dao<User> {
 
+    List<User> findUsersByUsername(String username);
 }

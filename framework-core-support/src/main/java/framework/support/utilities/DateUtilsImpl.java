@@ -50,4 +50,9 @@ public class DateUtilsImpl implements DateUtils {
     public Long getCurrentUnixTime() {
         return this.convertToUnixTime(Calendar.getInstance().getTime());
     }
+    
+    @Override
+    public Long addSecondsUnixTime(Integer seconds) {
+        return convertToUnixTime(DateTime.now().plusSeconds(seconds).toDate());
+    }
 }

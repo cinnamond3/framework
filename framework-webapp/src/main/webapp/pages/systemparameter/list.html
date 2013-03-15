@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="systemParameter in systemParameters.results | filter:search | orderBy:'name'">
+        <tr ng-repeat="systemParameter in systemParameter.results | filter:search | orderBy:'name'">
             <td><a href="edit/{{systemParameter.id}}">{{systemParameter.code}}</a></td>
             <td>{{systemParameter.description}}</td>
             <td>{{systemParameter.maximum}}</td>

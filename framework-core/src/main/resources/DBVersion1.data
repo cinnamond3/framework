@@ -46,5 +46,14 @@
             <minimum>0</minimum>
             <maximum>256</maximum>
         </SystemParameter>
+        <SystemParameter>
+            <code>SESSION_TIMEOUT</code>
+            <description>Session Timeout</description>
+            <readonly>false</readonly>
+            <type>STRING</type>
+            <value>30</value>
+            <minimum>0</minimum>
+            <maximum>600</maximum>
+        </SystemParameter>
     </records>
 </Data>

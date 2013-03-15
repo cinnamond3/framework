@@ -1,8 +1,18 @@
-angular.module('systemparameter.data', [ 'ngResource' ]).factory('ServiceResponse', function($resource) {
-    return $resource('../../services/systemParameters/retrieveAllActive');
+angular.module('systemparameter.service', [ 'ngResource' ]).factory('ServiceResponse', function($resource) {
+    return $resource('../../services/systemParameters/', {}, {
+        load : {
+            method : 'POST',
+            params : {
+                serviceRequest : '{"request" : null,"requestHeader" : null}'
+            },
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+        }
+    });
 });
 
-angular.module('systemparameter', ['systemparameter.data']).config(function($routeProvider) {
+angular.module('systemparameter', [ 'systemparameter.service' ]).config(function($routeProvider) {
     $routeProvider.when('/', {
         controller : ListCtrl,
         templateUrl : 'list.html'
@@ -15,7 +25,7 @@ angular.module('systemparameter', ['systemparameter.data']).config(function($rou
 });
 
 function ListCtrl($scope, ServiceResponse) {
-	$scope.systemParameters = ServiceResponse.get();
+    $scope.systemParameters = ServiceResponse.load();
 }
 
 function EditCtrl($scope, $location, $routeParams, ServiceResponse) {

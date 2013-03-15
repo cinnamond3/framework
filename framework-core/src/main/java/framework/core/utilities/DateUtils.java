@@ -12,4 +12,6 @@ public interface DateUtils {
 
     Long getCurrentUnixTime();
 
+    public abstract Long addSecondsUnixTime(Integer seconds);
+
 }

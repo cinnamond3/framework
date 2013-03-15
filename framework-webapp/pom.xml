@@ -12,8 +12,8 @@
         <finalName>framework</finalName>
     </build>
     <properties>
-        <slf4j.version>1.7.2</slf4j.version>
-        <logback.version>1.0.9</logback.version>
+        <slf4j.version>1.7.3</slf4j.version>
+        <logback.version>1.0.10</logback.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
         <hibernate.version>4.1.10.Final</hibernate.version>
         <ehcache.version>2.5.3</ehcache.version>

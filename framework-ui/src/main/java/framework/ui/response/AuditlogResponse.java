@@ -1,4 +1,4 @@
-package framework.ui.databeans;
+package framework.ui.response;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AuditlogDTO extends AbstractDTO {
+public class AuditlogResponse {
 
     @XmlElement
     private String detail;

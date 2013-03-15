@@ -1,5 +1,6 @@
 package framework.core.service;
 
+import framework.core.entity.Session;
 import framework.core.entity.User;
 
 /**
@@ -9,4 +10,5 @@ import framework.core.entity.User;
  */
 public interface UserService extends Service<User> {
 
+    Session authenticate(String username, String password);
 }
