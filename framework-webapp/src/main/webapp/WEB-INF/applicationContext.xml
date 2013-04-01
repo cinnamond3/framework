@@ -13,9 +13,9 @@
     </bean>
     <!-- Database Connectivity -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/framework" />
-        <property name="user" value="frameworkadmin" />
+        <property name="driverClass" value="org.postgresql.Driver" />
+        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/framework" />
+        <property name="user" value="framework" />
         <property name="password" value="password1234" />
     </bean>
     <bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
@@ -37,7 +37,7 @@
         <property name="jpaProperties">
             <props>
                 <prop key="javax.persistence.sharedCache.mode">ALL</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.use_query_cache">true</prop>
@@ -80,4 +80,5 @@
         <property name="password" value="${framework.encryption.password}" />
         <property name="poolSize" value="${framework.encryption.poolsize}" />
     </bean>
+    <bean class="org.slf4j.bridge.SLF4JBridgeHandler" init-method="install"/>
 </beans>

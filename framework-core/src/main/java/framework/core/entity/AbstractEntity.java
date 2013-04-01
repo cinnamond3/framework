@@ -1,10 +1,11 @@
 package framework.core.entity;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
@@ -26,26 +27,20 @@ public abstract class AbstractEntity implements Serializable {
     private boolean deleted;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.TABLE)
     @Column
-    private final String id;
+    private Long id;
 
     @Column
     @Version
     private Long version;
 
     /**
-     * Default constructor.
-     */
-    protected AbstractEntity() {
-        this.id = UUID.randomUUID().toString();
-    }
-
-    /**
      * Returns the unique identifier for this data.
      * 
      * @return the unique identifier.
      */
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
 

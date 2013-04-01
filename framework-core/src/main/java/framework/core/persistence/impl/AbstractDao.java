@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -115,7 +114,6 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         if (size != null) {
             query.setMaxResults(size);
         }
-        query.setFlushMode(FlushModeType.COMMIT);
         final List<T> objects = query.getResultList();
         for (final T object : objects) {
             this.entityManager.detach(object);

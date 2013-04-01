@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @author frederick
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "PRINCIPAL")
 @NamedQueries(value = { @NamedQuery(name = "findUsersByUsername", query = "from User where username = :username") })
 public class User extends AbstractEntity {
 
