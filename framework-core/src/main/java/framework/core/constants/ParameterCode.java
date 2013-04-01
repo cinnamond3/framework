@@ -37,5 +37,7 @@ public enum ParameterCode {
      */
     SMTP_HOST,
     
-    SESSION_TIMEOUT
+    SESSION_TIMEOUT, 
+    
+    ANONYMOUS_USER_CREATION
 }

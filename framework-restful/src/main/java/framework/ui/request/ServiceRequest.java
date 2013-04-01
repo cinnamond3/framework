@@ -2,16 +2,15 @@ package framework.ui.request;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class ServiceRequest<T> implements Serializable {
 
     private static final long serialVersionUID = -4675056771193159091L;
 
-    @XmlElement
     private T request;
 
-    @XmlElement
     private RequestHeader requestHeader;
 
     public T getRequest() {

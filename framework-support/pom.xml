@@ -5,19 +5,14 @@
     <parent>
         <groupId>framework</groupId>
         <artifactId>framework</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
-    <groupId>framework-core-support</groupId>
-    <artifactId>framework-core-support</artifactId>
-    <name>framework-core-support</name>
-    <properties>
-        <hibernate.version>4.1.10.Final</hibernate.version>
-    </properties>
+    <artifactId>framework-support</artifactId>
     <dependencies>
         <dependency>
             <groupId>framework</groupId>
             <artifactId>framework-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <!-- Mapping -->
         <dependency>
@@ -47,18 +42,6 @@
             <groupId>xstream</groupId>
             <artifactId>xstream</artifactId>
             <version>1.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
-            <version>${powermock.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

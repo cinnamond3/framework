@@ -80,4 +80,5 @@
         <property name="password" value="${framework.encryption.password}" />
         <property name="poolSize" value="${framework.encryption.poolsize}" />
     </bean>
+    <bean class="org.slf4j.bridge.SLF4JBridgeHandler" init-method="install"/>
 </beans>

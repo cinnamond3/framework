@@ -1,0 +1,1 @@
+angular.module('waffle', [ 'systemParameter.controller' ]);

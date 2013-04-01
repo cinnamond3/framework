@@ -32,5 +32,7 @@ public enum ParameterType {
     /**
      * The parameter type is just a {@link String}.
      */
-    STRING
+    STRING,
+    
+    PASSWORD
 }

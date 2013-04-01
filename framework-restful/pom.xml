@@ -4,14 +4,14 @@
     <parent>
         <groupId>framework</groupId>
         <artifactId>framework</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
-    <artifactId>framework-ui</artifactId>
+    <artifactId>framework-restful</artifactId>
     <dependencies>
         <dependency>
             <groupId>framework</groupId>
             <artifactId>framework-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <!-- Restful API -->
         <dependency>
@@ -19,13 +19,5 @@
             <artifactId>jsr311-api</artifactId>
             <version>1.1.1</version>
         </dependency>
-        <!-- JSON -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20090211</version>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 </project>

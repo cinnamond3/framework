@@ -20,16 +20,18 @@ public class SessionServiceImpl extends AbstractService<Session, SessionDao> imp
 
     @Override
     public boolean isValidSession(String userid, String sessionid) {
-        final Session session = this.getPersistence().findById(sessionid);
-        final SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.SESSION_TIMEOUT);
         boolean isValidSession = false;
-        if (session != null) {
-            if ((userid.equals(session.getUser().getId())) && (this.dateUtils.getCurrentUnixTime() < session.getEnd())) {
-                session.setEnd(this.dateUtils.addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
-                this.getPersistence().saveOrUpdate(session);
-                isValidSession = true;
+        if (userid!=null || sessionid!=null) {
+            final Session session = this.getPersistence().findById(sessionid);
+            final SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.SESSION_TIMEOUT);
+            if (session != null) {
+                if ((userid.equals(session.getUser().getId())) && (this.dateUtils.getCurrentUnixTime() < session.getEnd())) {
+                    session.setEnd(this.dateUtils.addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
+                    this.getPersistence().saveOrUpdate(session);
+                    isValidSession = true;
+                }
+    
             }
-
         }
         return isValidSession;
     }

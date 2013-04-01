@@ -9,9 +9,9 @@
         </appender>
         <appender name="APPLOGFILE"
                 class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${user.home}/logs/spis2.log</file>
+                <file>${user.home}/logs/waffle.log</file>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                        <fileNamePattern>${user.home}/logs/spis2_%d{yyyy-MM-dd}.log
+                        <fileNamePattern>${user.home}/logs/waffle_%d{yyyy-MM-dd}.log
                         </fileNamePattern>
                 </rollingPolicy>
                 <encoder>

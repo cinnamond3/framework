@@ -15,7 +15,7 @@ import framework.ui.response.SessionResponse;
 
 @Named
 @Path("/login")
-public class LoginController extends BaseController<LoginRequest, SessionResponse> {
+public class LoginController extends AbstractController<LoginRequest, SessionResponse> {
 
     /**
      * 
@@ -24,7 +24,7 @@ public class LoginController extends BaseController<LoginRequest, SessionRespons
     private UserService userService;
 
     @Override
-    public List<SessionResponse> processResult(LoginRequest loginRequest) {
+    public List<SessionResponse> processRequest(LoginRequest loginRequest) {
         final Session session = this.userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         final SessionResponse sessionDTO = new SessionResponse();
         sessionDTO.setSessionId(session.getId());

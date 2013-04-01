@@ -1,0 +1,20 @@
+<div>
+    <div>
+        <label>Code</label>
+        <span>{{systemParameter.code}}</span>
+    </div>
+    <div>
+        <label>Description</label>
+        <span>{{systemParameter.description}}</span>
+    </div>
+    <div ng-switch on="systemParameter.readonly">
+        <label>Value</label>
+        <span ng-switch-when="true">{{systemParameter.value}}</span>
+        <span ng-switch-when="false" ng-switch on="systemParameter.type">
+            <input ng-switch-when="BOOLEAN" type="checkbox" name="systemParameter.value" checked="false" value="{{systemParameter.value}}" />
+            <input ng-switch-when="PASSWORD" type="password" value="{{systemParameter.value}}" />
+            <input ng-switch-when="EMAIL" type="email" value="{{systemParameter.value}}" />
+            <input ng-switch-default type="text" value="{{systemParameter.value}}" />
+        </span>        
+    </div>
+</div>

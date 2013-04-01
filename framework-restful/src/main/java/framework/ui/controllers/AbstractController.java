@@ -2,6 +2,8 @@ package framework.ui.controllers;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,36 +21,44 @@ import framework.ui.response.ResponseHeader;
 import framework.ui.response.ServiceResponse;
 
 @Named
-public abstract class BaseController<T extends Serializable, I extends Serializable> implements Serializable {
+public abstract class AbstractController<T extends Serializable, I extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = -1508227485108273495L;
     private SessionService sessionService;
-
+    private Logger logger = Logger.getLogger(getClass().getName());
+    
+    protected AbstractController() {
+    }
+    
     @POST
-    @Consumes(value={MediaType.APPLICATION_XML})
+    @Consumes(value={MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public final ServiceResponse<I> processRequest(ServiceRequest<T> serviceRequest) {
+    public final ServiceResponse<I> handleRequest(ServiceRequest<T> serviceRequest) {
         final ServiceResponse<I> serviceResponse = new ServiceResponse<I>();
         final ResponseHeader header = new ResponseHeader();
-        //if (this.isAccessible(serviceRequest.getRequestHeader())) {
+        if (this.isAccessible(serviceRequest.getRequestHeader())) {
             try {
-                final List<I> t = this.processResult(serviceRequest.getRequest());
+                final List<I> t = this.processRequest(serviceRequest.getRequest());
                 header.setStatusCode(0);
                 header.setStatusMessage("Successful.");
                 serviceResponse.setResults(t);
             } catch (final ServiceException e) {
                 header.setStatusCode(e.getCode());
                 header.setStatusMessage(e.getMessage());
+            } catch (final Exception e) {
+                logger.log(Level.SEVERE, ServiceError.SYSTEM_EXCEPTION.getMessage(), e);
+                header.setStatusCode(ServiceError.SYSTEM_EXCEPTION.getCode());
+                header.setStatusMessage(ServiceError.SYSTEM_EXCEPTION.getMessage());
             }
-            serviceResponse.setResponseHeader(header);
-        //} else {
-         //   header.setStatusCode(ServiceError.ACCESS_DENIED.getCode());
-        //    header.setStatusMessage(ServiceError.ACCESS_DENIED.getMessage());
-        //}
+        } else {
+            header.setStatusCode(ServiceError.ACCESS_DENIED.getCode());
+            header.setStatusMessage(ServiceError.ACCESS_DENIED.getMessage());
+        }
+        serviceResponse.setResponseHeader(header);
         return serviceResponse;
     }
 
-    public abstract List<I> processResult(T t);
+    protected abstract List<I> processRequest(T t);
 
     protected boolean isAccessible(RequestHeader requestHeader) {
         if (requestHeader!=null) {

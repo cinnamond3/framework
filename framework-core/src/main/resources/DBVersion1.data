@@ -23,8 +23,17 @@
             <code>EMAIL_PASSWORD</code>
             <description>Email Password</description>
             <readonly>false</readonly>
-            <type>STRING</type>
+            <type>PASSWORD</type>
             <value>Password Here</value>
+            <minimum>0</minimum>
+            <maximum>256</maximum>
+        </SystemParameter>
+        <SystemParameter>
+            <code>ANONYMOUS_USER_CREATION</code>
+            <description>Allow anonymous user creation.</description>
+            <readonly>false</readonly>
+            <type>BOOLEAN</type>
+            <value>false</value>
             <minimum>0</minimum>
             <maximum>256</maximum>
         </SystemParameter>
