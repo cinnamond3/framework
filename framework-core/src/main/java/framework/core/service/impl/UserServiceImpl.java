@@ -53,7 +53,7 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
         }
         session.setUser(user);
         session.setStart(this.dateUtils.getCurrentUnixTime());
-        session.setEnd(this.dateUtils.addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
+        session.setExpiry(this.dateUtils.addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
         this.sessionService.saveOrUpdate(session);
         return session;
     }

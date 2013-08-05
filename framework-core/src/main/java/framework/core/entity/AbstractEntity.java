@@ -2,11 +2,14 @@ package framework.core.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
@@ -35,6 +38,9 @@ public abstract class AbstractEntity implements Serializable {
     @Version
     private Long version;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Customer customer;
+    
     /**
      * Returns the unique identifier for this data.
      * 
@@ -62,4 +68,12 @@ public abstract class AbstractEntity implements Serializable {
         return this.deleted;
     }
 
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+    
 }

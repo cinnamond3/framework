@@ -25,8 +25,8 @@ public class SessionServiceImpl extends AbstractService<Session, SessionDao> imp
             final Session session = this.getPersistence().findById(sessionid);
             final SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.SESSION_TIMEOUT);
             if (session != null) {
-                if ((userid.equals(session.getUser().getId())) && (this.dateUtils.getCurrentUnixTime() < session.getEnd())) {
-                    session.setEnd(this.dateUtils.addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
+                if ((userid.equals(session.getUser().getId())) && (this.dateUtils.getCurrentUnixTime() < session.getExpiry())) {
+                    session.setExpiry(this.dateUtils.addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
                     this.getPersistence().saveOrUpdate(session);
                     isValidSession = true;
                 }
