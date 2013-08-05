@@ -36,6 +36,9 @@ public class User extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Usergroup usergroup;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional=false)
+    private Client client;
+
     @Column(unique = true, nullable = false)
     private String username;
 
@@ -116,5 +119,13 @@ public class User extends AbstractEntity {
     protected void setUsername(String username) {
         this.username = username;
     }
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
 }

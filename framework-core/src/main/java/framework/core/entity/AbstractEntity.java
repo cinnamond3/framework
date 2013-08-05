@@ -61,5 +61,5 @@ public abstract class AbstractEntity implements Serializable {
     public boolean isDeleted() {
         return this.deleted;
     }
-
+    
 }

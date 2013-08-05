@@ -136,8 +136,8 @@ public class EntityListener implements Serializable {
             auditlog.setType(EventType.UPDATE);
             if (previousLog != null) {
                 auditlog.setPrevious(previousLog.getDetail());
+                auditlogService.saveOrUpdate(auditlog);
             }
-            auditlogService.saveOrUpdate(auditlog);
         }
     }
 

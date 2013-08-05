@@ -52,6 +52,13 @@
 				<phone>8888888</phone>
 				<zipcode>1000</zipcode>
 	        </userdetails>
+	        <client>
+	        	<name>Default</name>
+	        	<validity>4102358400</validity>
+	        	<emailaddress>default@default.com</emailaddress>
+	        	<phone>000-0000</phone>
+	        	<mobile>000-000-0000</mobile>
+	        </client>
         </User>
     </records>
 </Data>
