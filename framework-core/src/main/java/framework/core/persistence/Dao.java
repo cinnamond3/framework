@@ -5,7 +5,8 @@ import java.io.Serializable;
 import framework.core.entity.AbstractEntity;
 
 /**
- * This interface represents basic CRUD operations. All data access object interfaces must extends this interface.
+ * This interface represents basic CRUD operations. All data access object
+ * interfaces must extends this interface.
  * 
  * @author Frederick Yap
  * @param <T>
@@ -22,12 +23,13 @@ public interface Dao<T extends AbstractEntity> extends Serializable {
     void delete(T t);
 
     /**
-     * Return the persistent instance of the given entity class with the given identifier, or null if there is no such
-     * persistent instance.
+     * Return the persistent instance of the given entity class with the given
+     * identifier, or null if there is no such persistent instance.
      * 
      * @param id
      *            the unique identifier of the entity class.
-     * @return the persistent instance of the given entity class with the given identifier.
+     * @return the persistent instance of the given entity class with the given
+     *         identifier.
      */
     T findById(String id);
 
@@ -36,6 +38,7 @@ public interface Dao<T extends AbstractEntity> extends Serializable {
      * 
      * @param t
      *            the persisted instance.
+     * @return the updated persisted instance.
      */
-    void saveOrUpdate(T t);
+    T saveOrUpdate(T t);
 }

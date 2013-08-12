@@ -68,8 +68,8 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
      * AbstractEntity)
      */
     @Override
-    public void saveOrUpdate(T t) {
-        this.entityManager.merge(t);
+    public T saveOrUpdate(T t) {
+        return this.entityManager.merge(t);
     }
 
     protected List<T> find(String name) {

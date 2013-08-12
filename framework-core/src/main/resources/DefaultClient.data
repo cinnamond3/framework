@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Data>
+    <records>
+		<Client>
+	    	<name>Default</name>
+			<validity>4102358400</validity>
+			<emailaddress>someone@example.com</emailaddress>
+			<phone>000-0000</phone>
+			<mobile>000-000-0000</mobile>
+	  	</Client>
+	</records>
+</Data>

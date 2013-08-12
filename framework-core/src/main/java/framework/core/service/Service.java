@@ -1,7 +1,7 @@
 package framework.core.service;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 import framework.core.entity.AbstractEntity;
 
@@ -20,15 +20,7 @@ public interface Service<T extends AbstractEntity> extends Serializable {
      * @param ts
      *            persisted instances.
      */
-    void delete(Collection<T> ts);
-
-    /**
-     * Delete persisted instances in the datastore.
-     * 
-     * @param ts
-     *            persisted instances.
-     */
-    void delete(@SuppressWarnings("unchecked") T... ts);
+    void delete(List<T> ts);
 
     /**
      * Delete persisted instances in the datastore.
@@ -54,15 +46,7 @@ public interface Service<T extends AbstractEntity> extends Serializable {
      * @param ts
      *            the persisted instances.
      */
-    void saveOrUpdate(Collection<T> ts);
-
-    /**
-     * Either save or update the given instances of an entity to the datastore.
-     * 
-     * @param ts
-     *            the persisted instances.
-     */
-    void saveOrUpdate(@SuppressWarnings("unchecked") T... ts);
+    List<T> saveOrUpdate(List<T> ts);
 
     /**
      * Either save or update the given instances of an entity to the datastore.
@@ -70,5 +54,5 @@ public interface Service<T extends AbstractEntity> extends Serializable {
      * @param t
      *            the persisted instances.
      */
-    void saveOrUpdate(T t);
+    T saveOrUpdate(T t);
 }

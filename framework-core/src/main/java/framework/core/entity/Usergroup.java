@@ -1,5 +1,6 @@
 package framework.core.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,6 +21,9 @@ public class Usergroup extends AbstractEntity {
 
     private static final long serialVersionUID = -1885738464094155147L;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Client> clients;
+
     @Column
     private String description;
 
@@ -28,6 +32,13 @@ public class Usergroup extends AbstractEntity {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Role> roles;
+
+    public List<Client> getClients() {
+        if (this.clients == null ) {
+            this.clients = new ArrayList<Client>();
+        }
+        return this.clients;
+    }
 
     /**
      * Returns the description of this usergroup.
@@ -54,6 +65,10 @@ public class Usergroup extends AbstractEntity {
      */
     public List<Role> getRoles() {
         return this.roles;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 
     public void setDescription(String description) {

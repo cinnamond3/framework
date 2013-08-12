@@ -1,6 +1,7 @@
 package framework.core.service.impl;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,19 +31,9 @@ public abstract class AbstractService<T extends AbstractEntity, I extends Dao<T>
      * @see framework.core.service.Service#delete(java.util.Collection)
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public void delete(Collection<T> ts) {
-        this.delete((T[]) ts.toArray());
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see framework.core.service.Service#delete(T[])
-     */
-    @Override
-    public void delete(@SuppressWarnings("unchecked") T... ts) {
-        for (final T t : ts) {
-            this.persistence.delete(t);
+    public void delete(List<T> ts) {
+        for (T t : ts) {
+            this.delete(t);
         }
     }
 
@@ -69,21 +60,12 @@ public abstract class AbstractService<T extends AbstractEntity, I extends Dao<T>
      * @see framework.core.service.Service#saveOrUpdate(java.util.Collection)
      */
     @Override
-    public void saveOrUpdate(Collection<T> ts) {
+    public List<T> saveOrUpdate(List<T> ts) {
+        List<T> list = new ArrayList<T>();
         for (final T t : ts) {
-            this.saveOrUpdate(t);
+            list.add(this.saveOrUpdate(t));
         }
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see framework.core.service.Service#saveOrUpdate(T[])
-     */
-    @Override
-    public void saveOrUpdate(@SuppressWarnings("unchecked") T... ts) {
-        for (final T t : ts) {
-            this.saveOrUpdate(t);
-        }
+        return list;
     }
 
     /*
@@ -91,8 +73,8 @@ public abstract class AbstractService<T extends AbstractEntity, I extends Dao<T>
      * @see framework.core.service.Service#saveOrUpdate(T t)
      */
     @Override
-    public void saveOrUpdate(T t) {
-        this.persistence.saveOrUpdate(t);
+    public T saveOrUpdate(T t) {
+        return this.persistence.saveOrUpdate(t);
     }
 
     /**

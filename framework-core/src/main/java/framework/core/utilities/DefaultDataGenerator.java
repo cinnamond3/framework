@@ -11,6 +11,7 @@ import framework.core.entity.Role;
 import framework.core.entity.SystemParameter;
 import framework.core.entity.User;
 import framework.core.entity.Usergroup;
+import framework.core.service.ClientService;
 import framework.core.service.SystemParameterService;
 import framework.core.service.UserService;
 
@@ -20,6 +21,7 @@ public class DefaultDataGenerator extends DataGenerator {
     private Cryptography cryptography;
     private SystemParameterService systemParameterService;
     private UserService userService;
+    private ClientService clientService;
 
     @Override
     protected Integer getDBVersion() {
@@ -28,16 +30,19 @@ public class DefaultDataGenerator extends DataGenerator {
 
     @Override
     protected void performDataOperation() {
-        final Data<SystemParameter> systemParameterData = this.retrieveXMLContent("DBVersion1.data", SystemParameter.class);
+        final Data<SystemParameter> systemParameterData = this.retrieveXMLContent("DefaultSystemParameters.data", SystemParameter.class);
         final List<SystemParameter> systemParameters = systemParameterData.getRecords();
-        final User user = (User) this.retrieveXMLContent("DBVersion2.data", User.class, Usergroup.class, Role.class, Client.class).getRecords().get(0);
-
+        final User user = (User) this.retrieveXMLContent("DefaultUser.data", User.class, Usergroup.class, Role.class, Client.class).getRecords().get(0);      
+        final Client client = this.clientService.saveOrUpdate((Client)this.retrieveXMLContent("DefaultClient.data", Client.class).getRecords().get(0));
+        
         for (final SystemParameter systemParameter : systemParameters) {
             systemParameter.setValue(this.cryptography.encrypt(systemParameter.getValue()));
         }
         this.systemParameterService.saveOrUpdate(systemParameters);
 
         user.setPassword(this.cryptography.encrypt(user.getPassword()));
+        user.setClient(client);
+        user.getUsergroup().getClients().add(client);
         this.userService.saveOrUpdate(user);
     }
 
@@ -56,4 +61,10 @@ public class DefaultDataGenerator extends DataGenerator {
         this.userService = userService;
     }
 
+    @Inject
+    protected void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    
 }
