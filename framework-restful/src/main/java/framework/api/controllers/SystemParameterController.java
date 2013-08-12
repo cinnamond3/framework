@@ -1,19 +1,20 @@
-package framework.ui.controllers;
+package framework.api.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-import framework.core.constants.ParameterCode;
+import framework.api.request.SystemParameterRequest;
+import framework.api.response.ServiceResponse;
+import framework.api.response.SystemParameterResponse;
 import framework.core.entity.SystemParameter;
 import framework.core.service.SystemParameterService;
 import framework.core.utilities.Cryptography;
-import framework.ui.request.RequestHeader;
-import framework.ui.request.SystemParameterRequest;
-import framework.ui.response.SystemParameterResponse;
 
 @Named
 @Path("/systemParameter")
@@ -23,15 +24,11 @@ public class SystemParameterController extends AbstractController<SystemParamete
     private SystemParameterService systemParameterService;
     private Cryptography cryptography;
     
-    @Override
-    public List<SystemParameterResponse> processRequest(SystemParameterRequest t) {
+    @GET
+    @RolesAllowed(value={"Administrator"})
+    public ServiceResponse<SystemParameterResponse> processRequest() {
         final List<SystemParameterResponse> list = new ArrayList<SystemParameterResponse>();
-        List<SystemParameter> systemParameters = new ArrayList<SystemParameter>();
-        if (t==null) {
-            systemParameters.addAll(this.systemParameterService.findAllActiveSystemParam());
-        } else {
-            systemParameters.add(this.systemParameterService.findByCode(ParameterCode.valueOf(t.getCode())));
-        }
+        List<SystemParameter> systemParameters =  this.systemParameterService.findAllActiveSystemParam();
         for (final SystemParameter systemParameter : systemParameters) {
             final SystemParameterResponse systemParameterDTO = new SystemParameterResponse();
             systemParameterDTO.setCode(systemParameter.getCode().name());
@@ -43,7 +40,9 @@ public class SystemParameterController extends AbstractController<SystemParamete
             systemParameterDTO.setValue(cryptography.decrypt(systemParameter.getValue()));
             list.add(systemParameterDTO);
         }
-        return list;
+        ServiceResponse<SystemParameterResponse> serviceResponse = new ServiceResponse<>();
+        serviceResponse.setResults(list);
+        return serviceResponse;
     }
 
     /**
@@ -58,11 +57,6 @@ public class SystemParameterController extends AbstractController<SystemParamete
     @Inject
     protected void setCryptography(Cryptography cryptography) {
         this.cryptography = cryptography;
-    }
-
-    @Override
-    protected boolean isAccessible(RequestHeader requestHeader) {
-        return true;
     }
     
 }

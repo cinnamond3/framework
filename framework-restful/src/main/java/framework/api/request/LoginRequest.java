@@ -1,4 +1,4 @@
-package framework.ui.request;
+package framework.api.request;
 
 import java.io.Serializable;
 

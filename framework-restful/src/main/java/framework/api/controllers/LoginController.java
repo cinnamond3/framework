@@ -1,17 +1,22 @@
-package framework.ui.controllers;
+package framework.api.controllers;
 
 import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
 
+import framework.api.request.LoginRequest;
+import framework.api.response.ServiceResponse;
+import framework.api.response.ServiceResponseBuilder;
+import framework.api.response.SessionResponse;
 import framework.core.entity.Session;
 import framework.core.service.UserService;
-import framework.ui.request.LoginRequest;
-import framework.ui.request.RequestHeader;
-import framework.ui.response.SessionResponse;
+import framework.core.service.exceptions.ServiceException;
 
 @Named
 @Path("/login")
@@ -23,19 +28,15 @@ public class LoginController extends AbstractController<LoginRequest, SessionRes
     private static final long serialVersionUID = -6402313528023081815L;
     private UserService userService;
 
-    @Override
-    public List<SessionResponse> processRequest(LoginRequest loginRequest) {
+    @POST
+    @Consumes(value={MediaType.APPLICATION_JSON})
+    public ServiceResponse<SessionResponse> processRequest(LoginRequest loginRequest) {
         final Session session = this.userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         final SessionResponse sessionDTO = new SessionResponse();
         sessionDTO.setSessionId(String.valueOf(session.getId()));
         sessionDTO.setUserId(String.valueOf(session.getUser().getId()));
         sessionDTO.setUsergroupId(String.valueOf(session.getUser().getUsergroup().getId()));
-        return Arrays.asList(sessionDTO);
-    }
-
-    @Override
-    protected boolean isAccessible(RequestHeader requestHeader) {
-        return true;
+        return ServiceResponseBuilder.getInstance().results(Arrays.asList(sessionDTO)).statusCode(0).statusMessage("Success").build();
     }
 
     @Inject

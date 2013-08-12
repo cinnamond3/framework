@@ -14,9 +14,13 @@
         <servlet-class>
                      com.sun.jersey.spi.spring.container.servlet.SpringServlet
        </servlet-class>
+       <init-param>
+            <param-name>com.sun.jersey.spi.container.ResourceFilters</param-name>
+            <param-value>framework.support.security.ResourceFilterFactory</param-value>
+        </init-param>
         <init-param>
              <param-name>com.sun.jersey.config.property.packages</param-name>
-             <param-value>framework.ui.controllers</param-value>
+             <param-value>framework.ui.controllers, framework.api.providers</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>

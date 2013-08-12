@@ -1,4 +1,4 @@
-package framework.ui.response;
+package framework.api.response;
 
 import java.util.Date;
 

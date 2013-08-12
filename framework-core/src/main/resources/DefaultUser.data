@@ -2,10 +2,10 @@
 <Data>
     <records>
         <User>
-			<username>administrator</username>
+			<name>administrator</name>
             <password>password1234</password>
-            <passwordexpiration>0</passwordexpiration>
-            <profileexpiration>0</profileexpiration>
+            <passwordexpiration>4102358400</passwordexpiration>
+            <profileexpiration>4102358400</profileexpiration>
             <usergroup>
 	            <name>SYS_ADMIN</name>
 	            <description>System Administrators</description>

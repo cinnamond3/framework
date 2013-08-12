@@ -1,4 +1,4 @@
-package framework.ui.response;
+package framework.api.response;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

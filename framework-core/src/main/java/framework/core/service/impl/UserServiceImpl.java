@@ -15,6 +15,7 @@ import framework.core.service.SessionService;
 import framework.core.service.SystemParameterService;
 import framework.core.service.UserService;
 import framework.core.service.exceptions.AuthenticationException;
+import framework.core.utilities.Cryptography;
 import framework.core.utilities.DateUtils;
 
 /**
@@ -29,6 +30,7 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
     private DateUtils dateUtils;
     private SessionService sessionService;
     private SystemParameterService systemParameterService;
+    private Cryptography cryptography;
 
     @Override
     public Session authenticate(String username, String password) {
@@ -48,14 +50,13 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
         if (this.dateUtils.getCurrentUnixTime() > user.getPasswordexpiration()) {
             throw new AuthenticationException(ServiceError.EXPIRED_CREDENTIALS);
         }
-        if (!password.equals(user.getPassword())) {
+        if (!password.equals(cryptography.decrypt(user.getPassword()))) {
             throw new AuthenticationException(ServiceError.INVALID_USER);
         }
         session.setUser(user);
         session.setStart(this.dateUtils.getCurrentUnixTime());
-        session.setExpiry(this.dateUtils.addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
-        this.sessionService.saveOrUpdate(session);
-        return session;
+        session.setExpiry(this.dateUtils.addSecondsUnixTime(Integer.valueOf(cryptography.decrypt(systemParameter.getValue()))));
+        return this.sessionService.saveOrUpdate(session);
     }
 
     @Inject
@@ -72,4 +73,10 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
     protected void setSystemParameterService(SystemParameterService systemParameterService) {
         this.systemParameterService = systemParameterService;
     }
+
+    @Inject
+    protected void setCryptography(Cryptography cryptography) {
+        this.cryptography = cryptography;
+    }
+    
 }

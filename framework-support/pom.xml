@@ -14,19 +14,12 @@
             <artifactId>framework-core</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <!-- Mapping -->
         <dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
-            <version>1.4.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>framework</groupId>
+            <artifactId>framework-restful</artifactId>
+            <version>1.0.0</version>
         </dependency>
-        <!-- Encryption -->
+        <!-- Mapping -->
         <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
@@ -42,6 +35,11 @@
             <groupId>xstream</groupId>
             <artifactId>xstream</artifactId>
             <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.8</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,12 +1,12 @@
 angular.module('systemParameter.service', []).factory('ServiceResponse', ['$http', function($http){
     return{
         load: function(callback){
-            $http.post('../services/systemParameter/','{"request":null,"requestHeader":{"userid":null,"sessionid":null}}').success(function(data) {
+            $http.get('../services/systemParameter/').success(function(data) {
                 callback(data);
             });
         },
         loadByCode: function(callback, code){
-            $http.post('../services/systemParameter/','{"request":{"code":"'+ code +'"},"requestHeader":{"userid":null,"sessionid":null}}').success(function(data) {
+            $http.get('../services/systemParameter/'+ code ).success(function(data) {
                 callback(data);
             });
         }

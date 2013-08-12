@@ -1,5 +1,7 @@
 package framework.core.entity;
 
+import java.security.Principal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +18,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PRINCIPAL")
-@NamedQueries(value = { @NamedQuery(name = "findUsersByUsername", query = "from User where username = :username") })
-public class User extends AbstractEntity {
+@NamedQueries(value = { @NamedQuery(name = "findUsersByUsername", query = "from User where name = :username") })
+public class User extends AbstractEntity implements Principal {
 
     private static final long serialVersionUID = -7767487387897790096L;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private Client client;
+
+    @Column(unique = true, nullable = false)
+    private String name;
 
     @Column
     private String password;
@@ -36,11 +44,14 @@ public class User extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Usergroup usergroup;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional=false)
-    private Client client;
+    public Client getClient() {
+        return this.client;
+    }
 
-    @Column(unique = true, nullable = false)
-    private String username;
+    @Override
+    public String getName() {
+        return this.name;
+    }
 
     /**
      * Returns the secret 'key' used by the user for authentication.
@@ -87,13 +98,12 @@ public class User extends AbstractEntity {
         return this.usergroup;
     }
 
-    /**
-     * Returns the unique 'alias' of the user used for authentication.
-     * 
-     * @return unique 'alias' of the user.
-     */
-    public String getUsername() {
-        return this.username;
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPassword(String password) {
@@ -115,17 +125,5 @@ public class User extends AbstractEntity {
     public void setUsergroup(Usergroup usergroup) {
         this.usergroup = usergroup;
     }
-
-    protected void setUsername(String username) {
-        this.username = username;
-    }
-
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
 
 }
