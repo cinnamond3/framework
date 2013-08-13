@@ -32,8 +32,7 @@ public class XMLEncoderImpl implements XMLEncoder {
             xStream.alias(entry.getKey(), entry.getValue());
         }
         this.registerCommonAlias(xStream);
-        Object fromXML = xStream.fromXML(xml);
-        return (T) fromXML;
+        return (T) xStream.fromXML(xml);
     }
 
     private void registerCommonAlias(final XStream xStream) {
