@@ -9,7 +9,7 @@ import com.sun.jersey.spi.container.ContainerResponse;
 import com.sun.jersey.spi.container.ContainerResponseFilter;
 import com.sun.jersey.spi.container.ResourceFilter;
 
-import framework.api.security.SecurityContext;
+import framework.api.providers.SecurityContext;
 import framework.core.entity.Session;
 import framework.core.entity.User;
 import framework.core.service.SessionService;

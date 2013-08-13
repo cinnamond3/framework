@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import framework.core.constants.ParameterCode;
-import framework.core.constants.ServiceError;
+import framework.core.constants.ApplicationStatus;
 import framework.core.entity.Session;
 import framework.core.entity.SystemParameter;
 import framework.core.entity.User;
@@ -38,20 +38,20 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
         if (users.size() == 1) {
             return this.prepareSession(users.get(0), password);
         }
-        throw new AuthenticationException(ServiceError.INVALID_USER);
+        throw new AuthenticationException(ApplicationStatus.INVALID_USER);
     }
 
     protected Session prepareSession(User user, String password) {
         final Session session = new Session();
         final SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.SESSION_TIMEOUT);
         if (this.dateUtils.getCurrentUnixTime() > user.getProfileexpiration()) {
-            throw new AuthenticationException(ServiceError.EXPIRED_PROFILE);
+            throw new AuthenticationException(ApplicationStatus.EXPIRED_PROFILE);
         }
         if (this.dateUtils.getCurrentUnixTime() > user.getPasswordexpiration()) {
-            throw new AuthenticationException(ServiceError.EXPIRED_CREDENTIALS);
+            throw new AuthenticationException(ApplicationStatus.EXPIRED_CREDENTIALS);
         }
         if (!password.equals(cryptography.decrypt(user.getPassword()))) {
-            throw new AuthenticationException(ServiceError.INVALID_USER);
+            throw new AuthenticationException(ApplicationStatus.INVALID_USER);
         }
         session.setUser(user);
         session.setStart(this.dateUtils.getCurrentUnixTime());

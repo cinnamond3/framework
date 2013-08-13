@@ -1,27 +1,31 @@
 package framework.core.service.exceptions;
 
-import framework.core.constants.ServiceError;
+import framework.core.constants.ApplicationStatus;
 
 public abstract class ServiceException extends RuntimeException {
 
     private static final long serialVersionUID = 6245180922857816922L;
-    private ServiceError error;
+    private ApplicationStatus status;
     
-    public ServiceException(ServiceError error, Throwable cause) {
+    public ServiceException(ApplicationStatus error, Throwable cause) {
         super(error.getMessage(), cause);
-        this.error = error;
+        this.status = error;
     }
     
-    public ServiceException(ServiceError error) {
+    public ServiceException(ApplicationStatus error) {
         super(error.getMessage());
-        this.error = error;
+        this.status = error;
     }
 
     public Integer getCode() {
-        return this.error.getCode();
+        return this.status.getCode();
     }
 
     public String getMessage() {
-        return this.error.getMessage();
+        return this.status.getMessage();
+    }
+    
+    public ApplicationStatus getStatus() {
+        return this.status;
     }
 }

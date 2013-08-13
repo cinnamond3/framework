@@ -1,38 +1,30 @@
-package framework.api.security;
+package framework.api.providers;
 
 import java.security.Principal;
 
-import framework.api.controllers.ForbiddenRequestException;
+import framework.api.exceptions.ForbiddenRequestException;
 import framework.core.entity.Role;
 import framework.core.entity.Session;
 import framework.core.entity.User;
 
 public class SecurityContext implements javax.ws.rs.core.SecurityContext {
 
+    private final Session session;
     private final User user;
-    private Session session;
- 
+
     public SecurityContext(User user, Session session) {
         this.user = user;
         this.session = session;
     }
-    
+
     @Override
-    public Principal getUserPrincipal() {
-        return user;
+    public String getAuthenticationScheme() {
+        return javax.ws.rs.core.SecurityContext.BASIC_AUTH;
     }
 
     @Override
-    public boolean isUserInRole(String name) {
-        if (null == session) {
-            throw new ForbiddenRequestException();
-        }
-        for (Role role : user.getUsergroup().getRoles()) {
-            if (role.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
+    public Principal getUserPrincipal() {
+        return this.user;
     }
 
     @Override
@@ -41,8 +33,16 @@ public class SecurityContext implements javax.ws.rs.core.SecurityContext {
     }
 
     @Override
-    public String getAuthenticationScheme() {
-        return javax.ws.rs.core.SecurityContext.BASIC_AUTH;
+    public boolean isUserInRole(String name) {
+        if (null == this.session) {
+            throw new ForbiddenRequestException();
+        }
+        for (final Role role : this.user.getUsergroup().getRoles()) {
+            if (role.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

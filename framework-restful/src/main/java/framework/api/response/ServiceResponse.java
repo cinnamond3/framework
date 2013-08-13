@@ -11,40 +11,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ServiceResponse<T> {
 
-    @XmlElement
-    private ResponseHeader responseHeader;
-
-    @XmlElement
-    private List<T> results;
-
-    /**
-     * @return the responseHeader
-     */
-    public ResponseHeader getResponseHeader() {
-        return this.responseHeader;
+    public static <T> ServiceResponseBuilder<T> results() {
+        final ServiceResponseBuilder<T> serviceResponseBuilder = new ServiceResponseBuilder<T>();
+        return serviceResponseBuilder;
     }
 
-    /**
-     * @return the results
-     */
-    public List<T> getResults() {
-        return this.results;
+    public static <T> ServiceResponseBuilder<T> results(List<T> results) {
+        final ServiceResponseBuilder<T> serviceResponseBuilder = new ServiceResponseBuilder<T>();
+        serviceResponseBuilder.results(results);
+        return serviceResponseBuilder;
     }
 
-    /**
-     * @param responseHeader
-     *            the responseHeader to set
-     */
-    public void setResponseHeader(ResponseHeader responseHeader) {
+    @XmlElement
+    private final ResponseHeader responseHeader;
+
+    @XmlElement
+    private final List<T> results;
+
+    protected ServiceResponse(ResponseHeader responseHeader, List<T> results) {
         this.responseHeader = responseHeader;
-    }
-
-    /**
-     * @param results
-     *            the results to set
-     */
-    public void setResults(List<T> results) {
         this.results = results;
     }
-
 }

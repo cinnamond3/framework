@@ -12,12 +12,11 @@ public class SystemParameterRequest implements Serializable {
     private String code;
 
     public String getCode() {
-        return code;
+        return this.code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
-    
-    
+
 }

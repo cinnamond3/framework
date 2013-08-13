@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import framework.api.request.SystemParameterRequest;
 import framework.api.response.ServiceResponse;
 import framework.api.response.SystemParameterResponse;
+import framework.core.constants.ApplicationStatus;
 import framework.core.entity.SystemParameter;
 import framework.core.service.SystemParameterService;
 import framework.core.utilities.Cryptography;
@@ -21,14 +22,14 @@ import framework.core.utilities.Cryptography;
 public class SystemParameterController extends AbstractController<SystemParameterRequest, SystemParameterResponse> {
 
     private static final long serialVersionUID = 200605594031531073L;
-    private SystemParameterService systemParameterService;
     private Cryptography cryptography;
-    
+    private SystemParameterService systemParameterService;
+
     @GET
-    @RolesAllowed(value={"Administrator"})
+    @RolesAllowed(value = { "Administrator" })
     public ServiceResponse<SystemParameterResponse> processRequest() {
         final List<SystemParameterResponse> list = new ArrayList<SystemParameterResponse>();
-        List<SystemParameter> systemParameters =  this.systemParameterService.findAllActiveSystemParam();
+        final List<SystemParameter> systemParameters = this.systemParameterService.findAllActiveSystemParam();
         for (final SystemParameter systemParameter : systemParameters) {
             final SystemParameterResponse systemParameterDTO = new SystemParameterResponse();
             systemParameterDTO.setCode(systemParameter.getCode().name());
@@ -37,12 +38,15 @@ public class SystemParameterController extends AbstractController<SystemParamete
             systemParameterDTO.setMinimum(String.valueOf(systemParameter.getMinimum()));
             systemParameterDTO.setType(systemParameter.getType().name());
             systemParameterDTO.setReadonly(String.valueOf(systemParameter.isReadonly()));
-            systemParameterDTO.setValue(cryptography.decrypt(systemParameter.getValue()));
+            systemParameterDTO.setValue(this.cryptography.decrypt(systemParameter.getValue()));
             list.add(systemParameterDTO);
         }
-        ServiceResponse<SystemParameterResponse> serviceResponse = new ServiceResponse<>();
-        serviceResponse.setResults(list);
-        return serviceResponse;
+        return ServiceResponse.results(list).status(ApplicationStatus.SUCCESS).build();
+    }
+
+    @Inject
+    protected void setCryptography(Cryptography cryptography) {
+        this.cryptography = cryptography;
     }
 
     /**
@@ -54,9 +58,4 @@ public class SystemParameterController extends AbstractController<SystemParamete
         this.systemParameterService = systemParameterService;
     }
 
-    @Inject
-    protected void setCryptography(Cryptography cryptography) {
-        this.cryptography = cryptography;
-    }
-    
 }

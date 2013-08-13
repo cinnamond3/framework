@@ -17,12 +17,12 @@ public class RequestHeader implements Serializable {
         return this.sessionid;
     }
 
-    public void setSessionid(String sessionid) {
-        this.sessionid = sessionid;
-    }
-
     public String getUserid() {
         return this.userid;
+    }
+
+    public void setSessionid(String sessionid) {
+        this.sessionid = sessionid;
     }
 
     public void setUserid(String userid) {
