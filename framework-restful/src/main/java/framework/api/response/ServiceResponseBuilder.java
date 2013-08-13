@@ -11,6 +11,10 @@ public class ServiceResponseBuilder<T> {
     private Integer statusCode;
     private String statusMessage;
 
+    ServiceResponseBuilder() {
+        
+    }
+    
     public ServiceResponse<T> build() {
         final ResponseHeader responseHeader = new ResponseHeader();
         responseHeader.setStatusCode(this.statusCode);
