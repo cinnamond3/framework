@@ -48,7 +48,7 @@ public class DataInitializerServiceImpl {
             } else {
                 final ClassLoader classLoader = this.getClass().getClassLoader();
                 final InputStream resourceAsStream = classLoader.getResourceAsStream("Default.data");
-                systemParameter = this.xmlEncoder.convertTo(resourceAsStream, SystemParameter.class);
+                systemParameter = this.xmlEncoder.convert(resourceAsStream, SystemParameter.class);
                 systemParameter.setValue(this.cryptography.encrypt(String.valueOf(dataGenerator.getDBVersion())));
                 dataGenerator.performDataOperation();
                 this.systemParameterService.saveOrUpdate(systemParameter);

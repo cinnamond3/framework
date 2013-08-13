@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import framework.core.entity.Client;
-import framework.core.entity.Data;
 import framework.core.entity.Role;
 import framework.core.entity.SystemParameter;
 import framework.core.entity.User;
@@ -30,10 +29,9 @@ public class DefaultDataGenerator extends DataGenerator {
 
     @Override
     protected void performDataOperation() {
-        final Data<SystemParameter> systemParameterData = this.retrieveXMLContent("DefaultSystemParameters.data", SystemParameter.class);
-        final List<SystemParameter> systemParameters = systemParameterData.getRecords();
-        final User user = (User) this.retrieveXMLContent("DefaultUser.data", User.class, Usergroup.class, Role.class, Client.class).getRecords().get(0);      
-        final Client client = this.clientService.saveOrUpdate((Client)this.retrieveXMLContent("DefaultClient.data", Client.class).getRecords().get(0));
+        final List<SystemParameter> systemParameters = this.retrieveXMLContent("DefaultSystemParameters.data", SystemParameter.class);
+        final User user = (User) this.retrieveXMLContent("DefaultUser.data", User.class, Usergroup.class, Role.class, Client.class);      
+        final Client client = this.clientService.saveOrUpdate((Client)this.retrieveXMLContent("DefaultClient.data", Client.class));
         
         for (final SystemParameter systemParameter : systemParameters) {
             systemParameter.setValue(this.cryptography.encrypt(systemParameter.getValue()));

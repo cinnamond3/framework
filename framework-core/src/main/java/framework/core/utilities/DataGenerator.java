@@ -5,9 +5,6 @@ import java.io.InputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import framework.core.entity.AbstractEntity;
-import framework.core.entity.Data;
-
 /**
  * Base class for data generator classes.
  * 
@@ -35,7 +32,7 @@ public abstract class DataGenerator {
     /**
      * Initialize this class.
      */
-    protected final <T extends AbstractEntity> Data<T> retrieveXMLContent(String location, Class<?>... aClass) {
+    protected final <T> T retrieveXMLContent(String location, Class<?>... aClass) {
         if (location != null) {
             final InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(location);
             return this.xmlEncoder.convert(resourceAsStream, aClass);
