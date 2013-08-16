@@ -26,6 +26,9 @@ public class User extends AbstractEntity implements Principal {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Client client;
 
+    @Column
+    private String locale;
+
     @Column(unique = true, nullable = false)
     private String name;
 
@@ -124,6 +127,14 @@ public class User extends AbstractEntity implements Principal {
 
     public void setUsergroup(Usergroup usergroup) {
         this.usergroup = usergroup;
+    }
+
+    protected String getLocale() {
+        return this.locale;
+    }
+
+    protected void setLocale(String locale) {
+        this.locale = locale;
     }
 
 }

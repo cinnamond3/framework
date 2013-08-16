@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import framework.core.entity.Client;
+import framework.core.entity.Localization;
 import framework.core.entity.Role;
 import framework.core.entity.SystemParameter;
 import framework.core.entity.User;
@@ -29,7 +30,7 @@ public class DefaultDataGenerator extends DataGenerator {
 
     @Override
     protected void performDataOperation() {
-        final List<SystemParameter> systemParameters = this.retrieveXMLContent("DefaultSystemParameters.data", SystemParameter.class);
+        final List<SystemParameter> systemParameters = this.retrieveXMLContent("DefaultSystemParameters.data", SystemParameter.class, Localization.class);
         final User user = (User) this.retrieveXMLContent("DefaultUser.data", User.class, Usergroup.class, Role.class, Client.class);      
         final Client client = this.clientService.saveOrUpdate((Client)this.retrieveXMLContent("DefaultClient.data", Client.class));
         

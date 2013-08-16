@@ -26,8 +26,7 @@ public abstract class ServiceException extends RuntimeException {
         return this.status.getCode();
     }
 
-    @Override
-    public String getMessage() {
+    public String getErrorMessage() {
         return this.status.getMessage();
     }
 

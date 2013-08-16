@@ -4,9 +4,10 @@ public enum ApplicationStatus {
 
     SUCCESS(0, "Successful."), 
     SYSTEM_EXCEPTION(1, "Unhandled exception."), 
+    INVALID_USER(20, "Either the username of the password is invalid."), 
     EXPIRED_CREDENTIALS(21, "Password has already expired."), 
     EXPIRED_PROFILE(22, "Profile has already expired."), 
-    INVALID_USER(20, "Either the username of the password is invalid."), 
+    FAILED_TO_LOCALIZED(100, "Profile has already expired."), 
     FORBIDDEN(403, "Access Denied.");
 
     private Integer code;

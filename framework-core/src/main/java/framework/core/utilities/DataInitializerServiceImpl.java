@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import framework.core.constants.ParameterCode;
+import framework.core.entity.Localization;
 import framework.core.entity.SystemParameter;
 import framework.core.service.SystemParameterService;
 
@@ -48,7 +49,7 @@ public class DataInitializerServiceImpl {
             } else {
                 final ClassLoader classLoader = this.getClass().getClassLoader();
                 final InputStream resourceAsStream = classLoader.getResourceAsStream("Default.data");
-                systemParameter = this.xmlEncoder.convert(resourceAsStream, SystemParameter.class);
+                systemParameter = this.xmlEncoder.convert(resourceAsStream, SystemParameter.class, Localization.class);
                 systemParameter.setValue(this.cryptography.encrypt(String.valueOf(dataGenerator.getDBVersion())));
                 dataGenerator.performDataOperation();
                 this.systemParameterService.saveOrUpdate(systemParameter);
