@@ -56,34 +56,16 @@ public class DataInitializerServiceImpl {
 
     }
 
-    /**
-     * Sets the list of {@link DataGenerator} implementation to be used by this class.
-     * 
-     * @param cryptography
-     *            list {@link DataGenerator} implementation injected by the IOC container.
-     */
     @Inject
     protected void setDataGenerators(List<DataGenerator> dataGenerators) {
         this.dataGenerators = dataGenerators;
     }
 
-    /**
-     * Sets the instance of {@link SystemParameterService} implementation to be used by this class.
-     * 
-     * @param cryptography
-     *            {@link SystemParameterService} implementation injected by the IOC container.
-     */
     @Inject
     protected void setSystemParameterService(SystemParameterService systemParameterService) {
         this.systemParameterService = systemParameterService;
     }
 
-    /**
-     * Sets the instance of {@link XMLEncoder} implementation to be used by this class.
-     * 
-     * @param cryptography
-     *            {@link XMLEncoder} implementation injected by the IOC container.
-     */
     @Inject
     protected void setXmlEncoder(XMLEncoder xmlEncoder) {
         this.xmlEncoder = xmlEncoder;
