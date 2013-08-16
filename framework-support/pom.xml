@@ -16,7 +16,7 @@
         </dependency>
         <dependency>
             <groupId>framework</groupId>
-            <artifactId>framework-restful</artifactId>
+            <artifactId>framework-restapi</artifactId>
             <version>1.0.0</version>
         </dependency>
         <!-- Mapping -->
