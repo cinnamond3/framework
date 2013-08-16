@@ -20,6 +20,7 @@ import framework.core.service.SystemParameterService;
 @Named
 public class DataInitializerServiceImpl {
 
+    private Cryptography cryptography;
     private List<DataGenerator> dataGenerators;
     private SystemParameterService systemParameterService;
     private XMLEncoder xmlEncoder;
@@ -38,22 +39,27 @@ public class DataInitializerServiceImpl {
         for (final DataGenerator dataGenerator : this.dataGenerators) {
             SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.DB_VERSION);
             if (systemParameter != null) {
-                final Integer currentDBVersion = Integer.valueOf(EncryptionUtil.decrypt(systemParameter.getValue()));
+                final Integer currentDBVersion = Integer.valueOf(this.cryptography.decrypt(systemParameter.getValue()));
                 if (dataGenerator.getDBVersion() > currentDBVersion) {
                     dataGenerator.performDataOperation();
-                    systemParameter.setValue(EncryptionUtil.encrypt(String.valueOf(dataGenerator.getDBVersion())));
+                    systemParameter.setValue(this.cryptography.encrypt(String.valueOf(dataGenerator.getDBVersion())));
                     this.systemParameterService.saveOrUpdate(systemParameter);
                 }
             } else {
                 final ClassLoader classLoader = this.getClass().getClassLoader();
                 final InputStream resourceAsStream = classLoader.getResourceAsStream("Default.data");
                 systemParameter = this.xmlEncoder.convert(resourceAsStream, SystemParameter.class);
-                systemParameter.setValue(EncryptionUtil.encrypt(String.valueOf(dataGenerator.getDBVersion())));
+                systemParameter.setValue(this.cryptography.encrypt(String.valueOf(dataGenerator.getDBVersion())));
                 dataGenerator.performDataOperation();
                 this.systemParameterService.saveOrUpdate(systemParameter);
             }
         }
 
+    }
+
+    @Inject
+    protected void setCryptography(Cryptography cryptography) {
+        this.cryptography = cryptography;
     }
 
     @Inject
