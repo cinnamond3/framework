@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import framework.core.constants.ParameterCode;
-import framework.core.constants.ApplicationStatus;
 import framework.core.entity.Session;
 import framework.core.entity.SystemParameter;
 import framework.core.entity.User;
@@ -14,7 +13,9 @@ import framework.core.persistence.UserDao;
 import framework.core.service.SessionService;
 import framework.core.service.SystemParameterService;
 import framework.core.service.UserService;
-import framework.core.service.exceptions.AuthenticationException;
+import framework.core.service.exceptions.CredentialExpiredException;
+import framework.core.service.exceptions.InvalidUserException;
+import framework.core.service.exceptions.UserProfileExpiredException;
 import framework.core.utilities.Cryptography;
 import framework.core.utilities.DateUtils;
 
@@ -27,10 +28,10 @@ import framework.core.utilities.DateUtils;
 public class UserServiceImpl extends AbstractService<User, UserDao> implements UserService {
 
     private static final long serialVersionUID = 5506093159372637005L;
+    private Cryptography cryptography;
     private DateUtils dateUtils;
     private SessionService sessionService;
     private SystemParameterService systemParameterService;
-    private Cryptography cryptography;
 
     @Override
     public Session authenticate(String username, String password) {
@@ -38,25 +39,31 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
         if (users.size() == 1) {
             return this.prepareSession(users.get(0), password);
         }
-        throw new AuthenticationException(ApplicationStatus.INVALID_USER);
+        throw new InvalidUserException(String.format("Username [%s] does not exist.", username));
     }
 
     protected Session prepareSession(User user, String password) {
         final Session session = new Session();
         final SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.SESSION_TIMEOUT);
         if (this.dateUtils.getCurrentUnixTime() > user.getProfileexpiration()) {
-            throw new AuthenticationException(ApplicationStatus.EXPIRED_PROFILE);
+            throw new UserProfileExpiredException(String.format("User [%s] has already expired.", user.getName()));
         }
         if (this.dateUtils.getCurrentUnixTime() > user.getPasswordexpiration()) {
-            throw new AuthenticationException(ApplicationStatus.EXPIRED_CREDENTIALS);
+            throw new CredentialExpiredException(String.format("Credentials for user [%s] has already expired.", user.getName()));
         }
-        if (!password.equals(cryptography.decrypt(user.getPassword()))) {
-            throw new AuthenticationException(ApplicationStatus.INVALID_USER);
+        if (!password.equals(this.cryptography.decrypt(user.getPassword()))) {
+            throw new InvalidUserException(String.format("Password for [%s] does not match with the supplied password.", user.getName()));
         }
         session.setUser(user);
         session.setStart(this.dateUtils.getCurrentUnixTime());
-        session.setExpiry(this.dateUtils.addSecondsUnixTime(Integer.valueOf(cryptography.decrypt(systemParameter.getValue()))));
+        session.setExpiry(this.dateUtils.addSecondsUnixTime(Integer.valueOf(this.cryptography.decrypt(systemParameter
+                .getValue()))));
         return this.sessionService.saveOrUpdate(session);
+    }
+
+    @Inject
+    protected void setCryptography(Cryptography cryptography) {
+        this.cryptography = cryptography;
     }
 
     @Inject
@@ -74,9 +81,4 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
         this.systemParameterService = systemParameterService;
     }
 
-    @Inject
-    protected void setCryptography(Cryptography cryptography) {
-        this.cryptography = cryptography;
-    }
-    
 }
