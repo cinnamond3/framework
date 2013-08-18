@@ -1,0 +1,19 @@
+body {
+    background-color: #e3e3e3;
+    background-repeat: repeat;
+}
+
+header {
+    background-color: #4c66a4;
+    height: 42px;
+    vertical-align: middle;
+/*     border-color : black;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+ */}
+
+section {
+}
+
+footer {
+}
