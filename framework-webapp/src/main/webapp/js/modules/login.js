@@ -1,7 +1,7 @@
-angular.module('login.service', []).factory('ServiceResponse', ['$http', function($http){
+angular.module('login.service', []).factory('LoginResponse', ['$http', function($http){
     return{
         load: function(callback){
-            $http.get('../services/login/').success(function(data) {
+            $http.post('services/login/').success(function(data) {
                 callback(data);
             });
         }
@@ -10,6 +10,6 @@ angular.module('login.service', []).factory('ServiceResponse', ['$http', functio
 
 angular.module('login.controller', [ 'login.service' ]).config(function($routeProvider) {
     $routeProvider.when('/login', {
-        templateUrl: '../pages/login.html', 
+        templateUrl: 'pages/login.html', 
     });
 });
