@@ -1,1 +1,2 @@
-angular.module('waffle', [ 'systemParameter.controller' ]);
+angular.module('waffle', [ 'systemParameter.controller', 
+                           'login.controller' ]);
