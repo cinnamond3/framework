@@ -15,11 +15,20 @@ body {
     font: 400 12px/1.625 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.wrapper {
-    max-width: 500px;
-    width: 95%;
+header {
+    background-color: black;
+}
+
+section {
     margin: 0 auto;
     position: relative;
+}
+
+footer {
+    margin-top : 50px;
+    font-size: small;
+    text-align: center;
+    
 }
 
 form input {
@@ -76,10 +85,10 @@ form button[type="submit"] {
     cursor: pointer;
     width: 100%;
     border: none;
-    background: #991D57;
-    background-image: linear-gradient(bottom, #8C1C50 0%, #991D57 52%);
-    background-image: -moz-linear-gradient(bottom, #8C1C50 0%, #991D57 52%);
-    background-image: -webkit-linear-gradient(bottom, #8C1C50 0%, #991D57 52%);
+    background: #6666CC;
+    background-image: linear-gradient(bottom, #6633CC 0%, #6633FF 52%);
+    background-image: -moz-linear-gradient(bottom, #6633CC 0%, #6633FF 52%);
+    background-image: -webkit-linear-gradient(bottom, #6633CC 0%, #6633FF 52%);
     color: #FFF;
     margin: 0 0 5px;
     padding: 10px;
@@ -87,9 +96,9 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-    background-image: linear-gradient(bottom, #9C215A 0%, #A82767 52%);
-    background-image: -moz-linear-gradient(bottom, #9C215A 0%, #A82767 52%);
-    background-image: -webkit-linear-gradient(bottom, #9C215A 0%, #A82767 52%);
+    background-image: linear-gradient(bottom, #6666CC 0%, #6666FF 52%);
+    background-image: -moz-linear-gradient(bottom, #6666CC 0%, #6666FF 52%);
+    background-image: -webkit-linear-gradient(bottom, #6666CC 0%, #6666FF 52%);
     -webkit-transition: background 0.3s ease-in-out;
     -moz-transition: background 0.3s ease-in-out;
     transition: background-color 0.3s ease-in-out;
