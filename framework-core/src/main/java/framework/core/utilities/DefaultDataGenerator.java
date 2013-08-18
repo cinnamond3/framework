@@ -18,10 +18,10 @@ import framework.core.service.UserService;
 @Named
 public class DefaultDataGenerator extends DataGenerator {
 
+    private ClientService clientService;
     private Cryptography cryptography;
     private SystemParameterService systemParameterService;
     private UserService userService;
-    private ClientService clientService;
 
     @Override
     protected Integer getDBVersion() {
@@ -30,10 +30,13 @@ public class DefaultDataGenerator extends DataGenerator {
 
     @Override
     protected void performDataOperation() {
-        final List<SystemParameter> systemParameters = this.retrieveXMLContent("DefaultSystemParameters.data", SystemParameter.class, Localization.class);
-        final User user = (User) this.retrieveXMLContent("DefaultUser.data", User.class, Usergroup.class, Role.class, Client.class);      
-        final Client client = this.clientService.saveOrUpdate((Client)this.retrieveXMLContent("DefaultClient.data", Client.class));
-        
+        final List<SystemParameter> systemParameters = this.retrieveXMLContent("DefaultSystemParameters.data",
+                SystemParameter.class, Localization.class);
+        final User user = (User) this.retrieveXMLContent("DefaultUser.data", User.class, Usergroup.class, Role.class,
+                Client.class);
+        final Client client = this.clientService.saveOrUpdate((Client) this.retrieveXMLContent("DefaultClient.data",
+                Client.class));
+
         for (final SystemParameter systemParameter : systemParameters) {
             systemParameter.setValue(this.cryptography.encrypt(systemParameter.getValue()));
         }
@@ -43,6 +46,11 @@ public class DefaultDataGenerator extends DataGenerator {
         user.setClient(client);
         user.getUsergroup().getClients().add(client);
         this.userService.saveOrUpdate(user);
+    }
+
+    @Inject
+    protected void setClientService(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @Inject
@@ -60,10 +68,4 @@ public class DefaultDataGenerator extends DataGenerator {
         this.userService = userService;
     }
 
-    @Inject
-    protected void setClientService(ClientService clientService) {
-        this.clientService = clientService;
-    }
-
-    
 }

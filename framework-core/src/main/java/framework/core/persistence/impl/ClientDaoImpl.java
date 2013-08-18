@@ -12,11 +12,12 @@ import framework.core.persistence.ClientDao;
 @Named
 public class ClientDaoImpl extends AbstractDao<Client> implements ClientDao {
 
-	private static final long serialVersionUID = 3925222390268583407L;
+    private static final long serialVersionUID = 3925222390268583407L;
 
-	public List<Client> findClientByName(String name) {
-		final Map<String, Object> parameters = new HashMap<String, Object>();
+    @Override
+    public List<Client> findClientByName(String name) {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("name", name);
         return this.find("findClientByName", parameters);
-	}
+    }
 }

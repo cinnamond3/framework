@@ -2,6 +2,7 @@ package framework.core.service.impl;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import framework.core.constants.ParameterCode;
@@ -15,10 +16,17 @@ import framework.core.service.SystemParameterService;
  * @author Frederick Yap
  */
 @Named
-public class SystemParameterServiceImpl extends AbstractService<SystemParameter, SystemParameterDao> implements
-        SystemParameterService {
+public class SystemParameterServiceImpl extends AbstractService<SystemParameter> implements SystemParameterService {
 
     private static final long serialVersionUID = 1541672630059263485L;
+
+    private final SystemParameterDao systemParameterDao;
+
+    @Inject
+    protected SystemParameterServiceImpl(SystemParameterDao systemParameterDao) {
+        super(systemParameterDao);
+        this.systemParameterDao = systemParameterDao;
+    }
 
     /*
      * (non-Javadoc)
@@ -26,7 +34,7 @@ public class SystemParameterServiceImpl extends AbstractService<SystemParameter,
      */
     @Override
     public List<SystemParameter> findAllActiveSystemParam() {
-        return this.getPersistence().findAllActiveSystemParam();
+        return this.systemParameterDao.findAllActiveSystemParam();
     }
 
     /*
@@ -37,7 +45,7 @@ public class SystemParameterServiceImpl extends AbstractService<SystemParameter,
      */
     @Override
     public SystemParameter findByCode(ParameterCode code) {
-        final List<SystemParameter> systemParameters = this.getPersistence().findSystemParametersByCode(code);
+        final List<SystemParameter> systemParameters = this.systemParameterDao.findSystemParametersByCode(code);
         if (systemParameters.size() > 0) {
             return systemParameters.get(0);
         }

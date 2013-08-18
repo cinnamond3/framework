@@ -9,6 +9,8 @@ import javax.inject.Named;
 import framework.core.entity.AbstractEntity;
 import framework.core.persistence.Dao;
 import framework.core.service.Service;
+import framework.core.utilities.Cryptography;
+import framework.core.utilities.DateUtils;
 
 /**
  * Provides basic business operation for all service classes.
@@ -20,11 +22,17 @@ import framework.core.service.Service;
  *            must extends {@link Dao} of type T.
  */
 @Named
-public abstract class AbstractService<T extends AbstractEntity, I extends Dao<T>> implements Service<T> {
+public abstract class AbstractService<T extends AbstractEntity> implements Service<T> {
 
     private static final long serialVersionUID = 8443877242673541465L;
 
-    private I persistence;
+    private Cryptography cryptography;
+    private DateUtils dateUtils;
+    private final Dao<T> persistence;
+
+    protected AbstractService(Dao<T> persistence) {
+        this.persistence = persistence;
+    }
 
     /*
      * (non-Javadoc)
@@ -32,7 +40,7 @@ public abstract class AbstractService<T extends AbstractEntity, I extends Dao<T>
      */
     @Override
     public void delete(List<T> ts) {
-        for (T t : ts) {
+        for (final T t : ts) {
             this.delete(t);
         }
     }
@@ -61,7 +69,7 @@ public abstract class AbstractService<T extends AbstractEntity, I extends Dao<T>
      */
     @Override
     public List<T> saveOrUpdate(List<T> ts) {
-        List<T> list = new ArrayList<T>();
+        final List<T> list = new ArrayList<T>();
         for (final T t : ts) {
             list.add(this.saveOrUpdate(t));
         }
@@ -77,24 +85,22 @@ public abstract class AbstractService<T extends AbstractEntity, I extends Dao<T>
         return this.persistence.saveOrUpdate(t);
     }
 
-    /**
-     * Returns the data access class used by the service.
-     * 
-     * @return the data access class.
-     */
-    protected I getPersistence() {
-        return this.persistence;
+    protected Cryptography getCryptography() {
+        return this.cryptography;
     }
 
-    /**
-     * Sets an instance of data access class to be used by the service. This is normally injected by the IOC container.
-     * 
-     * @param persistence
-     *            instance of data access class.
-     */
+    protected DateUtils getDateUtils() {
+        return this.dateUtils;
+    }
+
     @Inject
-    protected void setPersistence(I persistence) {
-        this.persistence = persistence;
+    protected void setCryptography(Cryptography cryptography) {
+        this.cryptography = cryptography;
+    }
+
+    @Inject
+    protected void setDateUtils(DateUtils dateUtils) {
+        this.dateUtils = dateUtils;
     }
 
 }

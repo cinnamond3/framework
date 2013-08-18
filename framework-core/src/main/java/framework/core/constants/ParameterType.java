@@ -24,6 +24,8 @@ public enum ParameterType {
      */
     NUMERIC,
 
+    PASSWORD,
+
     /**
      * The parameter type is {@link Reference}. The {@link ReferenceType} is based on the {@link ParameterCode}.
      */
@@ -32,7 +34,5 @@ public enum ParameterType {
     /**
      * The parameter type is just a {@link String}.
      */
-    STRING,
-    
-    PASSWORD
+    STRING
 }

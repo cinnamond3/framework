@@ -34,7 +34,7 @@ public class Usergroup extends AbstractEntity {
     private List<Role> roles;
 
     public List<Client> getClients() {
-        if (this.clients == null ) {
+        if (this.clients == null) {
             this.clients = new ArrayList<Client>();
         }
         return this.clients;

@@ -7,6 +7,8 @@ package framework.core.constants;
  */
 public enum ParameterCode {
 
+    ANONYMOUS_USER_CREATION,
+
     /**
      * Represents the database version.
      */
@@ -27,6 +29,8 @@ public enum ParameterCode {
      */
     EMAIL_PASSWORD,
 
+    SESSION_TIMEOUT,
+
     /**
      * Represents if the SMTP requires authentication, TLS or SSL.
      */
@@ -35,9 +39,5 @@ public enum ParameterCode {
     /**
      * Represents the SMTP host for sending emails.
      */
-    SMTP_HOST,
-    
-    SESSION_TIMEOUT, 
-    
-    ANONYMOUS_USER_CREATION
+    SMTP_HOST
 }

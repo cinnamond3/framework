@@ -16,12 +16,10 @@ public class LocalizationDaoImpl extends AbstractDao<Localization> implements Lo
 
     @Override
     public List<Localization> findByKeyAndLocale(String key, String locale) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("key", key);
         parameters.put("locale", locale);
         return this.find("findByKeyAndLocale", parameters, true);
     }
-
-    
 
 }

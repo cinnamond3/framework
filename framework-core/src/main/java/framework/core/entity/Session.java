@@ -22,12 +22,20 @@ public class Session extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 
+    public Long getExpiry() {
+        return this.expiry;
+    }
+
     public Long getStart() {
         return this.start;
     }
 
     public User getUser() {
         return this.user;
+    }
+
+    public void setExpiry(Long expiry) {
+        this.expiry = expiry;
     }
 
     public void setStart(Long start) {
@@ -37,13 +45,5 @@ public class Session extends AbstractEntity {
     public void setUser(User user) {
         this.user = user;
     }
-
-	public Long getExpiry() {
-		return expiry;
-	}
-
-	public void setExpiry(Long expiry) {
-		this.expiry = expiry;
-	}
 
 }

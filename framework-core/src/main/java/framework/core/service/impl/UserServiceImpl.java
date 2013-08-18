@@ -16,8 +16,6 @@ import framework.core.persistence.UserDao;
 import framework.core.service.SessionService;
 import framework.core.service.SystemParameterService;
 import framework.core.service.UserService;
-import framework.core.utilities.Cryptography;
-import framework.core.utilities.DateUtils;
 
 /**
  * Performs business operations for {@link User} entity/
@@ -25,17 +23,23 @@ import framework.core.utilities.DateUtils;
  * @author Frederick Yap
  */
 @Named
-public class UserServiceImpl extends AbstractService<User, UserDao> implements UserService {
+public class UserServiceImpl extends AbstractService<User> implements UserService {
 
     private static final long serialVersionUID = 5506093159372637005L;
-    private Cryptography cryptography;
-    private DateUtils dateUtils;
     private SessionService sessionService;
     private SystemParameterService systemParameterService;
 
+    private final UserDao userDao;
+
+    @Inject
+    protected UserServiceImpl(UserDao userDao) {
+        super(userDao);
+        this.userDao = userDao;
+    }
+
     @Override
     public Session authenticate(String username, String password) {
-        final List<User> users = this.getPersistence().findUsersByUsername(username);
+        final List<User> users = this.userDao.findUsersByUsername(username);
         if (users.size() == 1) {
             return this.prepareSession(users.get(0), password);
         }
@@ -45,30 +49,22 @@ public class UserServiceImpl extends AbstractService<User, UserDao> implements U
     protected Session prepareSession(User user, String password) {
         final Session session = new Session();
         final SystemParameter systemParameter = this.systemParameterService.findByCode(ParameterCode.SESSION_TIMEOUT);
-        if (this.dateUtils.getCurrentUnixTime() > user.getProfileexpiration()) {
+        if (this.getDateUtils().getCurrentUnixTime() > user.getProfileexpiration()) {
             throw new UserProfileExpiredException(String.format("User [%s] has already expired.", user.getName()));
         }
-        if (this.dateUtils.getCurrentUnixTime() > user.getPasswordexpiration()) {
-            throw new CredentialExpiredException(String.format("Credentials for user [%s] has already expired.", user.getName()));
+        if (this.getDateUtils().getCurrentUnixTime() > user.getPasswordexpiration()) {
+            throw new CredentialExpiredException(String.format("Credentials for user [%s] has already expired.",
+                    user.getName()));
         }
-        if (!password.equals(this.cryptography.decrypt(user.getPassword()))) {
-            throw new InvalidUserException(String.format("Password for [%s] does not match with the supplied password.", user.getName()));
+        if (!password.equals(this.getCryptography().decrypt(user.getPassword()))) {
+            throw new InvalidUserException(String.format(
+                    "Password for [%s] does not match with the supplied password.", user.getName()));
         }
         session.setUser(user);
-        session.setStart(this.dateUtils.getCurrentUnixTime());
-        session.setExpiry(this.dateUtils.addSecondsUnixTime(Integer.valueOf(this.cryptography.decrypt(systemParameter
+        session.setStart(this.getDateUtils().getCurrentUnixTime());
+        session.setExpiry(this.getDateUtils().addSecondsUnixTime(Integer.valueOf(this.getCryptography().decrypt(systemParameter
                 .getValue()))));
         return this.sessionService.saveOrUpdate(session);
-    }
-
-    @Inject
-    protected void setCryptography(Cryptography cryptography) {
-        this.cryptography = cryptography;
-    }
-
-    @Inject
-    protected void setDateUtils(DateUtils dateUtils) {
-        this.dateUtils = dateUtils;
     }
 
     @Inject

@@ -8,9 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "LOCALIZATION")
-@NamedQueries({
-    @NamedQuery(name = "findByKeyAndLocale", query = "from Localization l where key=:key and value=:value")
-})
+@NamedQueries({ @NamedQuery(name = "findByKeyAndLocale", query = "from Localization l where key=:key and value=:value") })
 public class Localization extends AbstractEntity {
 
     private static final long serialVersionUID = -3688082536370841611L;

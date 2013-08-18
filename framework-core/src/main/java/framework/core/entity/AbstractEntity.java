@@ -27,7 +27,7 @@ public abstract class AbstractEntity implements Serializable {
     private boolean deleted;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column
     private Long id;
 
@@ -61,5 +61,5 @@ public abstract class AbstractEntity implements Serializable {
     public boolean isDeleted() {
         return this.deleted;
     }
-    
+
 }

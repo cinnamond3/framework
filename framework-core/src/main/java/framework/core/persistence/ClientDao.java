@@ -6,6 +6,6 @@ import framework.core.entity.Client;
 
 public interface ClientDao extends Dao<Client> {
 
-	List<Client> findClientByName(String name);
-	
+    List<Client> findClientByName(String name);
+
 }
