@@ -1,4 +1,4 @@
-package framework.core.service.exceptions;
+package framework.core.exceptions;
 
 import framework.core.constants.ApplicationStatus;
 

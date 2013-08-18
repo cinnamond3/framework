@@ -7,7 +7,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import framework.api.response.ServiceResponse;
-import framework.core.service.exceptions.ServiceException;
+import framework.core.exceptions.ServiceException;
 
 @Provider
 public class GenericErrorHandler implements ExceptionMapper<ServiceException> {
