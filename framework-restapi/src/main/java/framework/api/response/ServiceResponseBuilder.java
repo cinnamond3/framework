@@ -2,7 +2,7 @@ package framework.api.response;
 
 import java.util.List;
 
-import framework.core.constants.ApplicationStatus;
+import framework.core.enums.ApplicationStatus;
 
 public class ServiceResponseBuilder<T> {
 

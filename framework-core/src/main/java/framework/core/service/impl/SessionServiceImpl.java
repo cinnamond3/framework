@@ -1,11 +1,13 @@
 package framework.core.service.impl;
 
+import java.util.List;
+import java.util.UUID;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import framework.core.constants.ParameterCode;
 import framework.core.entity.Session;
-import framework.core.entity.SystemParameter;
+import framework.core.enums.ParameterCode;
 import framework.core.persistence.SessionDao;
 import framework.core.service.SessionService;
 import framework.core.service.SystemParameterService;
@@ -25,23 +27,19 @@ public class SessionServiceImpl extends AbstractService<Session> implements Sess
     }
 
     @Override
-    public boolean isValidSession(String userid, String sessionid) {
-        boolean isValidSession = false;
-        if ((userid != null) || (sessionid != null)) {
-            final Session session = this.sessionDao.findById(sessionid);
-            final SystemParameter systemParameter = this.systemParameterService
-                    .findByCode(ParameterCode.SESSION_TIMEOUT);
-            if (session != null) {
-                if ((userid.equals(session.getUser().getId()))
-                        && (this.getDateUtils().getCurrentUnixTime() < session.getExpiry())) {
-                    session.setExpiry(this.getDateUtils().addSecondsUnixTime(Integer.valueOf(systemParameter.getValue())));
-                    this.sessionDao.saveOrUpdate(session);
-                    isValidSession = true;
-                }
-
+    public Session findSession(String userid, String sessionid) {
+        final List<Session> sessions = this.sessionDao.findBySessionId(sessionid);
+        if (sessions.size() == 1) {
+            final Session session = sessions.get(0);
+            final String paramValue = this.systemParameterService.findByCode(ParameterCode.SESSION_TIMEOUT).getValue();
+            final Integer add = Integer.valueOf(this.getCryptography().decrypt(paramValue));
+            if ((userid.equals(session.getUser().getId())) && (this.getDateUtils().isBefore(session.getExpiry()))) {
+                session.setExpiry(this.getDateUtils().addSecondsUnixTime(add));
+                session.setSessionid(UUID.randomUUID().toString());
+                return this.sessionDao.saveOrUpdate(session);
             }
         }
-        return isValidSession;
+        return null;
     }
 
     @Inject

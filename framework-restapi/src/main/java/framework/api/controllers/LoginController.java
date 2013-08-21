@@ -12,13 +12,13 @@ import javax.ws.rs.core.MediaType;
 import framework.api.request.LoginRequest;
 import framework.api.response.ServiceResponse;
 import framework.api.response.SessionResponse;
-import framework.core.constants.ApplicationStatus;
 import framework.core.entity.Session;
+import framework.core.enums.ApplicationStatus;
 import framework.core.service.UserService;
 
 @Named
 @Path("/login")
-public class LoginController extends AbstractController<LoginRequest, SessionResponse> {
+public class LoginController extends AbstractController {
 
     /**
      * 
